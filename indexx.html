@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Padaria 4 Gerações - Início</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-amber-50/40 text-gray-800 min-h-screen flex flex-col font-sans">
+
+    <!-- Cabeçalho / Navbar -->
+    <header class="bg-amber-900 text-amber-100 shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-wheat-awn text-3xl text-amber-400"></i>
+                <div>
+                    <h1 class="text-2xl font-extrabold tracking-wider text-white">4 GERAÇÕES</h1>
+                    <p class="text-xs text-amber-300">Tradição & Qualidade em Pães</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex space-x-8 font-semibold">
+                <a href="#" class="text-amber-400 border-b-2 border-amber-400 pb-1">Início</a>
+                <a href="#produtos" class="text-amber-200 hover:text-white transition">Produtos</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Banner Principal (Hero Section) -->
+    <section class="relative bg-amber-950 text-white overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-25 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1200&q=80');"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-6 py-20 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="md:w-1/2 space-y-6">
+                <span class="bg-amber-800/80 text-amber-300 text-sm font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">Tradição de Família</span>
+                <h2 class="text-4xl md:text-6xl font-extrabold leading-tight">O Sabor Autêntico de <span class="text-amber-400">4 Gerações</span></h2>
+                <p class="text-amber-100/80 text-lg">Pães artesanais feitos diariamente com os melhores ingredientes e o carinho que atravessa gerações.</p>
+                <div class="pt-4 flex flex-col sm:flex-row gap-4">
+                    <a href="#produtos" class="bg-amber-500 hover:bg-amber-600 text-amber-950 text-center font-extrabold px-8 py-4 rounded-xl shadow-lg transition transform hover:-translate-y-0.5">Ver Pães</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&q=80" alt="Pão Francês" class="rounded-2xl shadow-2xl border-4 border-amber-700/50 object-cover h-80 w-full max-w-md">
+            </div>
+        </div>
+    </section>
+
+    <!-- Destaque dos 3 Pães -->
+    <section id="produtos" class="max-w-7xl mx-auto px-6 py-16 w-full">
+        <div class="text-center mb-12">
+            <h3 class="text-3xl font-extrabold text-amber-950">Nossos 3 Pães Principais</h3>
+            <p class="text-gray-600 mt-2">Fresquinhos e produzidos diariamente</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Card 1: Pão Francês -->
+            <div class="bg-white rounded-2xl shadow-md border border-amber-100 overflow-hidden hover:shadow-xl transition duration-300 flex flex-col">
+                <div class="h-52 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&q=80" alt="Pão Francês" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
+                    <span class="absolute top-3 right-3 bg-amber-900 text-amber-100 text-xs font-bold px-3 py-1 rounded-full">Tradicional</span>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                        <h4 class="text-xl font-bold text-amber-950">Pão Francês</h4>
+                        <p class="text-gray-600 text-sm mt-2">Crocante por fora, extremamente macio por dentro.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Pão de Forma -->
+            <div class="bg-white rounded-2xl shadow-md border border-amber-100 overflow-hidden hover:shadow-xl transition duration-300 flex flex-col">
+                <div class="h-52 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=600&q=80" alt="Pão de Forma" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
+                    <span class="absolute top-3 right-3 bg-amber-900 text-amber-100 text-xs font-bold px-3 py-1 rounded-full">Fatiado</span>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                        <h4 class="text-xl font-bold text-amber-950">Pão de Forma</h4>
+                        <p class="text-gray-600 text-sm mt-2">Perfeito para o café da manhã ou lanches.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Pão de Milho -->
+            <div class="bg-white rounded-2xl shadow-md border border-amber-100 overflow-hidden hover:shadow-xl transition duration-300 flex flex-col">
+                <div class="h-52 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=600&q=80" alt="Pão de Milho" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
+                    <span class="absolute top-3 right-3 bg-amber-900 text-amber-100 text-xs font-bold px-3 py-1 rounded-full">Especial</span>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                        <h4 class="text-xl font-bold text-amber-950">Pão de Milho</h4>
+                        <p class="text-gray-600 text-sm mt-2">Sabor caseiro levemente adocicado com textura macia.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="bg-amber-950 text-amber-200/70 text-center py-6 mt-auto border-t border-amber-900">
+        <p class="text-sm">Padaria 4 Gerações &copy; Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>
