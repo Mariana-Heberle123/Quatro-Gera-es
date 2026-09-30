@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Carrinho - Padaria 4 Gerações</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+
+<body class="bg-amber-50 min-h-screen text-gray-800 flex flex-col">
+
+    <!-- Cabeçalho -->
+
+    <header class="bg-amber-900 text-amber-100 shadow-lg">
+
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+            <div class="flex items-center space-x-3">
+
+                <i class="fa-solid fa-wheat-awn text-3xl text-amber-400"></i>
+
+                <div>
+
+                    <h1 class="text-2xl font-extrabold text-white">
+                        4 GERAÇÕES
+                    </h1>
+
+                    <p class="text-xs text-amber-300">
+                        Tradição & Qualidade em Pães
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="flex items-center gap-8">
+
+                <nav class="hidden md:flex space-x-8 font-semibold">
+
+                    <a href="/" class="text-amber-200 hover:text-white transition">
+                        Início
+                    </a>
+
+                    <a href="/produtos" class="text-amber-200 hover:text-white transition">
+                        Produtos
+                    </a>
+
+                </nav>
+
+                <a href="/carrinho"
+                   class="text-amber-400 transition text-2xl"
+                   title="Carrinho">
+
+                    <i class="fa-solid fa-cart-shopping"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- Carrinho -->
+
+    <main class="max-w-5xl mx-auto px-6 py-12 w-full">
+
+        <h2 class="text-4xl font-extrabold text-amber-950 mb-8">
+            Meu Carrinho
+        </h2>
+
+
+        {% if produtos %}
+
+        <div class="space-y-5">
+
+            {% for item in produtos %}
+
+            <div class="bg-white rounded-2xl shadow-md border border-amber-100 p-5">
+
+                <div class="flex items-center gap-6">
+
+                    {% if item['produto']['id'] == 1 %}
+
+                    <img src="{{ url_for('static', filename='pao-frances.jpg') }}"
+                         alt="{{ item['produto']['nome'] }}"
+                         class="w-28 h-28 object-cover rounded-xl">
+
+                    {% elif item['produto']['id'] == 2 %}
+
+                    <img src="{{ url_for('static', filename='pao-de-forma.webp') }}"
+                         alt="{{ item['produto']['nome'] }}"
+                         class="w-28 h-28 object-cover rounded-xl">
+
+                    {% else %}
+
+                    <img src="{{ url_for('static', filename='pao-de-milho.jpg') }}"
+                         alt="{{ item['produto']['nome'] }}"
+                         class="w-28 h-28 object-cover rounded-xl">
+
+                    {% endif %}
+
+
+                    <div class="flex-1">
+
+                        <h3 class="text-xl font-bold text-amber-950">
+                            {{ item['produto']['nome'] }}
+                        </h3>
+
+                        <p class="text-gray-600 text-sm mt-1">
+                            {{ item['produto']['descricao'] }}
+                        </p>
+
+                        <p class="text-gray-500 text-sm mt-1">
+                            Preço por unidade:
+                            R$ {{ "%.2f"|format(item['produto']['preco']) }}
+                        </p>
+
+                        <p class="text-amber-900 font-bold text-lg mt-2">
+                            Subtotal:
+                            R$ {{ "%.2f"|format(item['subtotal']) }}
+                        </p>
+
+                    </div>
+
+
+                    <!-- Quantidade -->
+
+                    <div class="flex items-center gap-3">
+
+                        <a href="/diminuir/{{ item['produto']['id'] }}"
+                           class="w-9 h-9 flex items-center justify-center bg-amber-200 hover:bg-amber-300 text-amber-950 font-bold rounded-lg">
+                            −
+                        </a>
+
+                        <span class="text-lg font-bold min-w-[25px] text-center">
+                            {{ item['quantidade'] }}
+                        </span>
+
+                        <a href="/adicionar/{{ item['produto']['id'] }}"
+                           class="w-9 h-9 flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold rounded-lg">
+                            +
+                        </a>
+
+                    </div>
+
+
+                    <!-- Remover -->
+
+                    <a href="/remover/{{ item['produto']['id'] }}"
+                       class="text-red-500 hover:text-red-700 text-xl"
+                       title="Remover">
+
+                        <i class="fa-solid fa-trash"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- Total -->
+
+        <div class="bg-amber-100 rounded-2xl p-6 mt-8 flex justify-between items-center">
+
+            <span class="text-xl font-bold text-amber-950">
+                Total
+            </span>
+
+            <span class="text-3xl font-extrabold text-amber-900">
+                R$ {{ "%.2f"|format(total) }}
+            </span>
+
+        </div>
+
+
+        {% else %}
+
+        <div class="bg-amber-100 rounded-2xl p-10 text-center">
+
+            <i class="fa-solid fa-cart-shopping text-4xl text-amber-700"></i>
+
+            <h3 class="text-2xl font-bold text-amber-950 mt-4">
+                Seu carrinho está vazio
+            </h3>
+
+            <p class="text-gray-600 mt-2">
+                Escolha um pão para adicionar ao carrinho.
+            </p>
+
+            <a href="/produtos"
+               class="inline-block bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold px-6 py-3 rounded-xl mt-6">
+
+                Ver produtos
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </main>
+
+
+    <!-- Rodapé -->
+
+    <footer class="bg-amber-950 text-amber-200/70 text-center py-6 mt-auto">
+
+        <p class="text-sm">
+            Padaria 4 Gerações &copy; Todos os direitos reservados.
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

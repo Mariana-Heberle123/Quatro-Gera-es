@@ -12,7 +12,8 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 </head>
 
@@ -42,17 +43,35 @@
 
             </div>
 
-            <nav class="hidden md:flex space-x-8 font-semibold">
 
-                <a href="/" class="text-amber-400 border-b-2 border-amber-400 pb-1">
-                    Início
+            <!-- Menu + Carrinho -->
+
+            <div class="flex items-center gap-8">
+
+                <nav class="hidden md:flex space-x-8 font-semibold">
+
+                    <a href="/" class="text-amber-400 border-b-2 border-amber-400 pb-1">
+                        Início
+                    </a>
+
+                    <a href="/produtos" class="text-amber-200 hover:text-white transition">
+                        Produtos
+                    </a>
+
+                </nav>
+
+
+                <!-- Ícone do Carrinho -->
+
+                <a href="/carrinho"
+                   class="text-amber-200 hover:text-amber-400 transition text-2xl"
+                   title="Carrinho">
+
+                    <i class="fa-solid fa-cart-shopping"></i>
+
                 </a>
 
-                <a href="/produtos" class="text-amber-200 hover:text-white transition">
-                    Produtos
-                </a>
-
-            </nav>
+            </div>
 
         </div>
 
@@ -76,24 +95,34 @@
                 </span>
 
                 <h2 class="text-4xl md:text-6xl font-extrabold leading-tight">
+
                     O Sabor Autêntico de
-                    <span class="text-amber-400">4 Gerações</span>
+
+                    <span class="text-amber-400">
+                        4 Gerações
+                    </span>
+
                 </h2>
 
                 <p class="text-amber-100/80 text-lg">
+
                     Pães artesanais feitos diariamente com os melhores ingredientes e o carinho que atravessa gerações.
+
                 </p>
 
                 <div class="pt-4 flex flex-col sm:flex-row gap-4">
 
                     <a href="/produtos"
                        class="bg-amber-500 hover:bg-amber-600 text-amber-950 text-center font-extrabold px-8 py-4 rounded-xl shadow-lg transition transform hover:-translate-y-0.5">
+
                         Ver Pães
+
                     </a>
 
                 </div>
 
             </div>
+
 
             <div class="md:w-1/2 flex justify-center">
 
@@ -124,6 +153,7 @@
 
         </div>
 
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
             {% for produto in produtos %}
@@ -142,7 +172,7 @@
 
                     {% elif produto['id'] == 2 %}
 
-                    <img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=600&q=80"
+                    <img src="{{ url_for('static', filename='pao-de-forma.webp') }}"
                          alt="{{ produto['nome'] }}"
                          class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
 
@@ -155,10 +185,13 @@
                     {% endif %}
 
                     <span class="absolute top-3 right-3 bg-amber-900 text-amber-100 text-xs font-bold px-3 py-1 rounded-full">
+
                         {{ produto['categoria'] }}
+
                     </span>
 
                 </div>
+
 
                 <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
 

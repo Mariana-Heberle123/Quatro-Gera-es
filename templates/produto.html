@@ -8,7 +8,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Produtos - Padaria 4 Gerações</title>
+    <title>{{ produto['nome'] }} - Padaria 4 Gerações</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -56,7 +56,7 @@
                     </a>
 
                     <a href="/produtos"
-                       class="text-amber-400 border-b-2 border-amber-400 pb-1">
+                       class="text-amber-200 hover:text-white transition">
                         Produtos
                     </a>
 
@@ -77,31 +77,13 @@
     </header>
 
 
-    <!-- Produtos -->
+    <!-- Produto -->
 
-    <main class="max-w-7xl mx-auto px-6 py-12 w-full">
+    <main class="max-w-5xl mx-auto px-6 py-12 w-full">
 
-        <div class="text-center mb-10">
+        <div class="bg-amber-100 rounded-[35px] shadow-lg p-8">
 
-            <h2 class="text-4xl font-extrabold text-amber-950">
-                Nossos Pães
-            </h2>
-
-            <p class="text-gray-600 mt-2">
-                Escolha seu pão favorito
-            </p>
-
-        </div>
-
-
-        <!-- Cards -->
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-
-            {% for produto in produtos %}
-
-            <a href="/produto/{{ produto['id'] }}"
-               class="w-full max-w-xs bg-amber-100 rounded-[35px] p-5 shadow-md border border-amber-200 hover:shadow-xl hover:-translate-y-1 transition duration-300">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
                 <!-- Imagem -->
 
@@ -111,19 +93,19 @@
 
                     <img src="{{ url_for('static', filename='pao-frances.jpg') }}"
                          alt="{{ produto['nome'] }}"
-                         class="w-44 h-44 object-cover rounded-[30px]">
+                         class="w-80 h-80 object-cover rounded-[30px]">
 
                     {% elif produto['id'] == 2 %}
 
                     <img src="{{ url_for('static', filename='pao-de-forma.webp') }}"
                          alt="{{ produto['nome'] }}"
-                         class="w-44 h-44 object-cover rounded-[30px]">
+                         class="w-80 h-80 object-cover rounded-[30px]">
 
                     {% else %}
 
                     <img src="{{ url_for('static', filename='pao-de-milho.jpg') }}"
                          alt="{{ produto['nome'] }}"
-                         class="w-44 h-44 object-cover rounded-[30px]">
+                         class="w-80 h-80 object-cover rounded-[30px]">
 
                     {% endif %}
 
@@ -132,24 +114,23 @@
 
                 <!-- Informações -->
 
-                <div class="mt-6">
+                <div>
 
-                    <span class="text-xs font-bold text-amber-800 uppercase">
+                    <span class="text-sm text-amber-800 font-semibold uppercase">
                         {{ produto['categoria'] }}
                     </span>
 
-                    <h3 class="text-xl font-bold text-amber-950 mt-1">
+
+                    <h2 class="text-4xl font-extrabold text-amber-950 mt-2">
                         {{ produto['nome'] }}
-                    </h3>
+                    </h2>
 
 
                     <!-- Avaliação -->
 
-                    <div class="mt-2 flex items-center gap-2">
+                    <div class="text-amber-500 mt-3 text-lg">
 
-                        <span class="text-amber-500 text-sm">
-                            ★★★★★
-                        </span>
+                        ★★★★★
 
                         <span class="text-gray-600 text-sm">
                             {{ produto['avaliacao'] }}
@@ -160,46 +141,43 @@
 
                     <!-- Descrição -->
 
-                    <p class="text-gray-600 text-sm mt-3">
+                    <p class="text-gray-600 mt-5 leading-relaxed">
                         {{ produto['descricao'] }}
                     </p>
 
-                    <p class="text-gray-500 text-xs mt-1">
+                    <p class="text-gray-500 text-sm mt-2">
                         Preço por unidade.
                     </p>
 
 
                     <!-- Preço -->
 
-                    <p class="text-2xl font-extrabold text-amber-900 mt-4">
+                    <p class="text-3xl font-extrabold text-amber-900 mt-6">
                         R$ {{ "%.2f"|format(produto['preco']) }}
                     </p>
 
 
                     <!-- Estoque -->
 
-                    <p class="text-gray-500 text-xs mt-1">
+                    <p class="text-gray-500 text-sm mt-2">
                         {{ produto['quantidade'] }} unidades disponíveis
                     </p>
 
 
-                    <!-- Botão -->
+                    <!-- Adicionar ao carrinho -->
 
-                    <div class="mt-5">
+                    <a href="/adicionar/{{ produto['id'] }}"
+                       class="inline-block bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold px-8 py-3 rounded-xl mt-6 transition">
 
-                        <span class="block text-center bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold py-3 rounded-xl transition">
+                        <i class="fa-solid fa-cart-plus mr-2"></i>
 
-                            Ver produto
+                        Adicionar ao carrinho
 
-                        </span>
-
-                    </div>
+                    </a>
 
                 </div>
 
-            </a>
-
-            {% endfor %}
+            </div>
 
         </div>
 
