@@ -1,22 +1,20 @@
 # Quatro-Gera-es
-Projeto Site
 
-Projeto de desenvolvimento de um site realizado como atividade acadêmica no SENAI.
-
-Sobre o projeto
-
+#Sobre o projeto
 Este repositório contém os arquivos utilizados para a criação e desenvolvimento do site, incluindo a estrutura, o estilo e os demais recursos necessários para o projeto.
 
-Tecnologias utilizadas
+#Tecnologias utilizadas
 HTML
-CSS
+Python
 JavaScript
-Objetivo
 
+#Objetivo
 Desenvolver um site aplicando os conhecimentos aprendidos durante as aulas de desenvolvimento de sistemas.
 
-Desenvolvido por
-
+# Desenvolvido por:
+Amanda Schäfer
+Emilly Paiano Schuster
+Luíza Maurer Mairesse
 Mariana Altenhofen Heberle
 
 Projeto acadêmico — SENAI.
