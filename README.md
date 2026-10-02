@@ -14,7 +14,7 @@ Desenvolver um site aplicando os conhecimentos aprendidos durante as aulas de de
 # Desenvolvido por:
 Amanda Schäfer,
 Emilly Paiano Schuster,
-Luíza Maurer Mairesse,
+Luíza Maurer Mairesse e
 Mariana Altenhofen Heberle.
 
 Projeto acadêmico — SENAI.
