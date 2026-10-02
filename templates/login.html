@@ -41,10 +41,11 @@
 
             </div>
 
-            <a href="/carrinho"
-               class="text-amber-200 hover:text-amber-400 transition text-2xl">
+            <a href="/"
+               class="text-amber-200 hover:text-amber-400 text-xl"
+               title="Início">
 
-                <i class="fa-solid fa-cart-shopping"></i>
+                <i class="fa-solid fa-house"></i>
 
             </a>
 
@@ -55,67 +56,147 @@
 
     <main class="flex-1 flex items-center justify-center px-6 py-12">
 
-        <div class="w-full max-w-md bg-amber-100 rounded-[30px] shadow-lg p-8">
+        <div class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">
 
-            <div class="text-center mb-8">
 
-                <i class="fa-solid fa-user text-amber-700 text-4xl"></i>
+            <!-- Entrar -->
 
-                <h2 class="text-3xl font-extrabold text-amber-950 mt-4">
-                    Entrar
-                </h2>
+            <div class="bg-amber-100 rounded-[30px] shadow-lg p-8">
 
-                <p class="text-gray-600 mt-2">
-                    Entre para continuar sua compra
-                </p>
+                <div class="text-center mb-7">
+
+                    <i class="fa-solid fa-user text-amber-700 text-4xl"></i>
+
+                    <h2 class="text-3xl font-extrabold text-amber-950 mt-4">
+                        Entrar
+                    </h2>
+
+                    <p class="text-gray-600 mt-2">
+                        Acesse sua conta
+                    </p>
+
+                </div>
+
+
+                <div id="erroLogin"
+                     class="hidden bg-red-100 text-red-700 rounded-xl p-3 mb-5 text-sm">
+                </div>
+
+
+                <form id="formLogin">
+
+                    <label class="block text-sm font-bold text-amber-950 mb-2">
+                        E-mail
+                    </label>
+
+                    <input
+                        type="email"
+                        id="emailLogin"
+                        required
+                        class="w-full border border-amber-200 rounded-xl px-4 py-3 mb-5"
+                        placeholder="seuemail@email.com">
+
+
+                    <label class="block text-sm font-bold text-amber-950 mb-2">
+                        Senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="senhaLogin"
+                        required
+                        class="w-full border border-amber-200 rounded-xl px-4 py-3 mb-6"
+                        placeholder="Sua senha">
+
+
+                    <button
+                        type="submit"
+                        class="w-full bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold py-3 rounded-xl">
+
+                        Entrar
+
+                    </button>
+
+                </form>
 
             </div>
 
 
-            {% if erro %}
+            <!-- Criar conta -->
 
-            <div class="bg-red-100 text-red-700 rounded-xl p-3 mb-5 text-sm">
-                {{ erro }}
+            <div class="bg-white rounded-[30px] shadow-lg border border-amber-100 p-8">
+
+                <div class="text-center mb-7">
+
+                    <i class="fa-solid fa-user-plus text-amber-700 text-4xl"></i>
+
+                    <h2 class="text-3xl font-extrabold text-amber-950 mt-4">
+                        Criar conta
+                    </h2>
+
+                    <p class="text-gray-600 mt-2">
+                        Crie seu próprio acesso
+                    </p>
+
+                </div>
+
+
+                <div id="erroCadastro"
+                     class="hidden bg-red-100 text-red-700 rounded-xl p-3 mb-5 text-sm">
+                </div>
+
+
+                <form id="formCadastro">
+
+                    <label class="block text-sm font-bold text-amber-950 mb-2">
+                        E-mail
+                    </label>
+
+                    <input
+                        type="email"
+                        id="emailCadastro"
+                        required
+                        class="w-full border border-amber-200 rounded-xl px-4 py-3 mb-5"
+                        placeholder="seuemail@email.com">
+
+
+                    <label class="block text-sm font-bold text-amber-950 mb-2">
+                        Senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="senhaCadastro"
+                        required
+                        minlength="6"
+                        class="w-full border border-amber-200 rounded-xl px-4 py-3 mb-5"
+                        placeholder="Mínimo de 6 caracteres">
+
+
+                    <label class="block text-sm font-bold text-amber-950 mb-2">
+                        Confirmar senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmarCadastro"
+                        required
+                        minlength="6"
+                        class="w-full border border-amber-200 rounded-xl px-4 py-3 mb-6"
+                        placeholder="Digite a senha novamente">
+
+
+                    <button
+                        type="submit"
+                        class="w-full bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold py-3 rounded-xl">
+
+                        Criar conta
+
+                    </button>
+
+                </form>
+
             </div>
-
-            {% endif %}
-
-
-            <form method="POST">
-
-                <label class="block text-sm font-bold text-amber-950 mb-2">
-                    E-mail
-                </label>
-
-                <input
-                    type="email"
-                    name="email"
-                    required
-                    class="w-full border border-amber-200 rounded-xl px-4 py-3 mb-5 outline-none focus:ring-2 focus:ring-amber-500"
-                    placeholder="cliente@padaria.com">
-
-
-                <label class="block text-sm font-bold text-amber-950 mb-2">
-                    Senha
-                </label>
-
-                <input
-                    type="password"
-                    name="senha"
-                    required
-                    class="w-full border border-amber-200 rounded-xl px-4 py-3 mb-6 outline-none focus:ring-2 focus:ring-amber-500"
-                    placeholder="123456">
-
-
-                <button
-                    type="submit"
-                    class="w-full bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold py-3 rounded-xl transition">
-
-                    Continuar
-
-                </button>
-
-            </form>
 
         </div>
 
@@ -129,6 +210,155 @@
         </p>
 
     </footer>
+
+
+    <!-- JavaScript -->
+
+    <script>
+
+        const proximo = new URLSearchParams(window.location.search)
+            .get("proximo") || "/produtos";
+
+
+        function mostrarErro(elemento, mensagem) {
+
+            elemento.textContent = mensagem;
+
+            elemento.classList.remove("hidden");
+
+        }
+
+
+        document.getElementById("formCadastro").addEventListener("submit", function(evento) {
+
+            evento.preventDefault();
+
+            const email = document
+                .getElementById("emailCadastro")
+                .value
+                .trim()
+                .toLowerCase();
+
+            const senha = document
+                .getElementById("senhaCadastro")
+                .value;
+
+            const confirmar = document
+                .getElementById("confirmarCadastro")
+                .value;
+
+            const erro = document.getElementById("erroCadastro");
+
+            erro.classList.add("hidden");
+
+
+            if (senha.length < 6) {
+
+                mostrarErro(
+                    erro,
+                    "A senha deve ter pelo menos 6 caracteres."
+                );
+
+                return;
+
+            }
+
+
+            if (senha !== confirmar) {
+
+                mostrarErro(
+                    erro,
+                    "As senhas não são iguais."
+                );
+
+                return;
+
+            }
+
+
+            let usuarios = JSON.parse(
+                localStorage.getItem("usuariosPadaria") || "{}"
+            );
+
+
+            if (usuarios[email]) {
+
+                mostrarErro(
+                    erro,
+                    "Esse e-mail já está cadastrado."
+                );
+
+                return;
+
+            }
+
+
+            usuarios[email] = senha;
+
+            localStorage.setItem(
+                "usuariosPadaria",
+                JSON.stringify(usuarios)
+            );
+
+
+            localStorage.setItem(
+                "usuarioLogado",
+                email
+            );
+
+
+            window.location.href = proximo;
+
+        });
+
+
+        document.getElementById("formLogin").addEventListener("submit", function(evento) {
+
+            evento.preventDefault();
+
+            const email = document
+                .getElementById("emailLogin")
+                .value
+                .trim()
+                .toLowerCase();
+
+            const senha = document
+                .getElementById("senhaLogin")
+                .value;
+
+            const erro = document.getElementById("erroLogin");
+
+            erro.classList.add("hidden");
+
+
+            const usuarios = JSON.parse(
+                localStorage.getItem("usuariosPadaria") || "{}"
+            );
+
+
+            if (!usuarios[email] || usuarios[email] !== senha) {
+
+                mostrarErro(
+                    erro,
+                    "E-mail ou senha incorretos."
+                );
+
+                return;
+
+            }
+
+
+            localStorage.setItem(
+                "usuarioLogado",
+                email
+            );
+
+
+            window.location.href = proximo;
+
+        });
+
+    </script>
 
 </body>
 

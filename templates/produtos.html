@@ -44,7 +44,7 @@
             </div>
 
 
-            <!-- Menu e Carrinho -->
+            <!-- Menu e ícones -->
 
             <div class="flex items-center gap-8">
 
@@ -61,6 +61,20 @@
                     </a>
 
                 </nav>
+
+
+                <!-- Relatórios -->
+
+                <a href="/relatorios"
+                   class="text-amber-200 hover:text-amber-400 transition text-2xl"
+                   title="Relatórios">
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                </a>
+
+
+                <!-- Carrinho -->
 
                 <a href="/carrinho"
                    class="text-amber-200 hover:text-amber-400 transition text-2xl"
@@ -215,6 +229,21 @@
         </p>
 
     </footer>
+
+
+    <!-- Verificação de login -->
+
+    <script>
+
+        const usuarioLogado = localStorage.getItem("usuarioLogado");
+
+        if (!usuarioLogado) {
+
+            window.location.href = "/login?proximo=/produtos";
+
+        }
+
+    </script>
 
 </body>
 

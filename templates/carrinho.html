@@ -45,7 +45,7 @@
             </div>
 
 
-            <!-- Menu e Carrinho -->
+            <!-- Menu, relatório e carrinho -->
 
             <div class="flex items-center gap-8">
 
@@ -62,6 +62,20 @@
                     </a>
 
                 </nav>
+
+
+                <!-- Relatórios -->
+
+                <a href="/relatorios"
+                   class="text-amber-200 hover:text-amber-400 transition text-2xl"
+                   title="Relatórios">
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                </a>
+
+
+                <!-- Carrinho -->
 
                 <a href="/carrinho"
                    class="text-amber-400 transition text-2xl"
@@ -89,7 +103,7 @@
 
         {% if produtos %}
 
-        <!-- Produtos do carrinho -->
+        <!-- Produtos -->
 
         <div class="space-y-5">
 
@@ -163,11 +177,13 @@
 
                         </a>
 
+
                         <span class="text-lg font-bold min-w-[25px] text-center">
 
                             {{ item['quantidade'] }}
 
                         </span>
+
 
                         <a href="/adicionar/{{ item['produto']['id'] }}"
                            class="w-9 h-9 flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold rounded-lg">
@@ -213,9 +229,9 @@
         </div>
 
 
-        <!-- Continuar para pagamento -->
+        <!-- Pagamento -->
 
-        <a href="/login"
+        <a href="/pagamento"
            class="block text-center bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold py-3 rounded-xl mt-6 transition">
 
             Continuar para pagamento

@@ -13,7 +13,7 @@ def conectar_banco():
     return conexao
 
 
-def criar_tabela_vendas():
+def criar_tabelas():
     conexao = conectar_banco()
 
     conexao.execute(
@@ -32,15 +32,17 @@ def criar_tabela_vendas():
     conexao.close()
 
 
-criar_tabela_vendas()
+criar_tabelas()
 
 
 @app.route("/")
 def inicio():
     conexao = conectar_banco()
+
     produtos = conexao.execute(
         "SELECT * FROM produtos"
     ).fetchall()
+
     conexao.close()
 
     return render_template("index.html", produtos=produtos)
@@ -49,9 +51,11 @@ def inicio():
 @app.route("/produtos")
 def produtos():
     conexao = conectar_banco()
+
     produtos = conexao.execute(
         "SELECT * FROM produtos"
     ).fetchall()
+
     conexao.close()
 
     return render_template("produtos.html", produtos=produtos)
@@ -189,33 +193,13 @@ def carrinho():
     )
 
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login")
 def login():
-
-    if request.method == "POST":
-
-        email = request.form["email"]
-        senha = request.form["senha"]
-
-        if email == "cliente@padaria.com" and senha == "123456":
-
-            session["usuario"] = email
-
-            return redirect(url_for("pagamento"))
-
-        return render_template(
-            "login.html",
-            erro="E-mail ou senha incorretos."
-        )
-
     return render_template("login.html")
 
 
 @app.route("/pagamento")
 def pagamento():
-
-    if "usuario" not in session:
-        return redirect(url_for("login"))
 
     carrinho = session.get("carrinho", {})
 
@@ -273,12 +257,6 @@ def pagamento():
 @app.route("/processar_pagamento", methods=["POST"])
 def processar_pagamento():
 
-    if "usuario" not in session:
-        return jsonify({
-            "sucesso": False,
-            "erro": "Usuário não autenticado."
-        }), 401
-
     carrinho = session.get("carrinho", {})
 
     if isinstance(carrinho, list):
@@ -317,14 +295,18 @@ def processar_pagamento():
             ).fetchone()
 
             if not produto:
+
                 conexao.rollback()
+
                 return jsonify({
                     "sucesso": False,
                     "erro": "Produto não encontrado."
                 }), 404
 
             if quantidade > produto["quantidade"]:
+
                 conexao.rollback()
+
                 return jsonify({
                     "sucesso": False,
                     "erro": f"Estoque insuficiente para {produto['nome']}."
@@ -359,7 +341,6 @@ def processar_pagamento():
         conexao.commit()
 
         session["carrinho"] = {}
-        session.pop("usuario", None)
 
         return jsonify({
             "sucesso": True,
