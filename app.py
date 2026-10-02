@@ -28,6 +28,31 @@ def criar_tabelas():
         """
     )
 
+    conexao.execute(
+        """
+        CREATE TABLE IF NOT EXISTS pedidos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            data_pedido TEXT NOT NULL,
+            total REAL NOT NULL,
+            status TEXT NOT NULL DEFAULT 'Concluído'
+        )
+        """
+    )
+
+    conexao.execute(
+        """
+        CREATE TABLE IF NOT EXISTS itens_pedido (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            pedido_id INTEGER NOT NULL,
+            produto_id INTEGER NOT NULL,
+            quantidade INTEGER NOT NULL,
+            preco REAL NOT NULL,
+            FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
+            FOREIGN KEY (produto_id) REFERENCES produtos(id)
+        )
+        """
+    )
+
     conexao.commit()
     conexao.close()
 
@@ -35,8 +60,13 @@ def criar_tabelas():
 criar_tabelas()
 
 
+# =========================================
+# INÍCIO
+# =========================================
+
 @app.route("/")
 def inicio():
+
     conexao = conectar_banco()
 
     produtos = conexao.execute(
@@ -45,11 +75,19 @@ def inicio():
 
     conexao.close()
 
-    return render_template("index.html", produtos=produtos)
+    return render_template(
+        "index.html",
+        produtos=produtos
+    )
 
+
+# =========================================
+# PRODUTOS
+# =========================================
 
 @app.route("/produtos")
 def produtos():
+
     conexao = conectar_banco()
 
     produtos = conexao.execute(
@@ -58,11 +96,15 @@ def produtos():
 
     conexao.close()
 
-    return render_template("produtos.html", produtos=produtos)
+    return render_template(
+        "produtos.html",
+        produtos=produtos
+    )
 
 
 @app.route("/produto/<int:id>")
 def produto_detalhes(id):
+
     conexao = conectar_banco()
 
     produto = conexao.execute(
@@ -75,15 +117,26 @@ def produto_detalhes(id):
     if not produto:
         return "Produto não encontrado", 404
 
-    return render_template("produto.html", produto=produto)
+    return render_template(
+        "produto.html",
+        produto=produto
+    )
 
+
+# =========================================
+# CARRINHO
+# =========================================
 
 @app.route("/adicionar/<int:id>")
 def adicionar_carrinho(id):
+
     carrinho = session.get("carrinho", {})
 
     if isinstance(carrinho, list):
-        carrinho = {str(item): 1 for item in carrinho}
+        carrinho = {
+            str(item): 1
+            for item in carrinho
+        }
 
     carrinho = dict(carrinho)
 
@@ -101,28 +154,37 @@ def adicionar_carrinho(id):
 
     id = str(id)
 
-    quantidade_atual = int(carrinho.get(id, 0))
+    quantidade_atual = int(
+        carrinho.get(id, 0)
+    )
 
     if quantidade_atual < produto["quantidade"]:
         carrinho[id] = quantidade_atual + 1
 
     session["carrinho"] = carrinho
 
-    return redirect(url_for("carrinho"))
+    return redirect(
+        url_for("carrinho")
+    )
 
 
 @app.route("/diminuir/<int:id>")
 def diminuir_carrinho(id):
+
     carrinho = session.get("carrinho", {})
 
     if isinstance(carrinho, list):
-        carrinho = {str(item): 1 for item in carrinho}
+        carrinho = {
+            str(item): 1
+            for item in carrinho
+        }
 
     carrinho = dict(carrinho)
 
     id = str(id)
 
     if id in carrinho:
+
         carrinho[id] -= 1
 
         if carrinho[id] <= 0:
@@ -130,15 +192,21 @@ def diminuir_carrinho(id):
 
     session["carrinho"] = carrinho
 
-    return redirect(url_for("carrinho"))
+    return redirect(
+        url_for("carrinho")
+    )
 
 
 @app.route("/remover/<int:id>")
 def remover_carrinho(id):
+
     carrinho = session.get("carrinho", {})
 
     if isinstance(carrinho, list):
-        carrinho = {str(item): 1 for item in carrinho}
+        carrinho = {
+            str(item): 1
+            for item in carrinho
+        }
 
     carrinho = dict(carrinho)
 
@@ -149,15 +217,21 @@ def remover_carrinho(id):
 
     session["carrinho"] = carrinho
 
-    return redirect(url_for("carrinho"))
+    return redirect(
+        url_for("carrinho")
+    )
 
 
 @app.route("/carrinho")
 def carrinho():
+
     carrinho = session.get("carrinho", {})
 
     if isinstance(carrinho, list):
-        carrinho = {str(item): 1 for item in carrinho}
+        carrinho = {
+            str(item): 1
+            for item in carrinho
+        }
 
     carrinho = dict(carrinho)
 
@@ -175,14 +249,20 @@ def carrinho():
 
         if produto:
 
-            subtotal = produto["preco"] * quantidade
+            subtotal = (
+                produto["preco"]
+                * quantidade
+            )
+
             total += subtotal
 
-            produtos_carrinho.append({
-                "produto": produto,
-                "quantidade": quantidade,
-                "subtotal": subtotal
-            })
+            produtos_carrinho.append(
+                {
+                    "produto": produto,
+                    "quantidade": quantidade,
+                    "subtotal": subtotal
+                }
+            )
 
     conexao.close()
 
@@ -193,23 +273,43 @@ def carrinho():
     )
 
 
+# =========================================
+# LOGIN DO CLIENTE
+# =========================================
+
 @app.route("/login")
 def login():
-    return render_template("login.html")
 
+    return render_template(
+        "login.html"
+    )
+
+
+# =========================================
+# PAGAMENTO
+# =========================================
 
 @app.route("/pagamento")
 def pagamento():
 
-    carrinho = session.get("carrinho", {})
+    carrinho = session.get(
+        "carrinho",
+        {}
+    )
 
     if isinstance(carrinho, list):
-        carrinho = {str(item): 1 for item in carrinho}
+        carrinho = {
+            str(item): 1
+            for item in carrinho
+        }
 
     carrinho = dict(carrinho)
 
     if not carrinho:
-        return redirect(url_for("carrinho"))
+
+        return redirect(
+            url_for("carrinho")
+        )
 
     conexao = conectar_banco()
 
@@ -233,17 +333,26 @@ def pagamento():
                     "pagamento.html",
                     produtos=[],
                     total=0,
-                    erro=f"Estoque insuficiente para {produto['nome']}."
+                    erro=(
+                        f"Estoque insuficiente para "
+                        f"{produto['nome']}."
+                    )
                 )
 
-            subtotal = produto["preco"] * quantidade
+            subtotal = (
+                produto["preco"]
+                * quantidade
+            )
+
             total += subtotal
 
-            produtos_pagamento.append({
-                "produto": produto,
-                "quantidade": quantidade,
-                "subtotal": subtotal
-            })
+            produtos_pagamento.append(
+                {
+                    "produto": produto,
+                    "quantidade": quantidade,
+                    "subtotal": subtotal
+                }
+            )
 
     conexao.close()
 
@@ -254,39 +363,79 @@ def pagamento():
     )
 
 
-@app.route("/processar_pagamento", methods=["POST"])
+@app.route(
+    "/processar_pagamento",
+    methods=["POST"]
+)
 def processar_pagamento():
 
-    carrinho = session.get("carrinho", {})
+    carrinho = session.get(
+        "carrinho",
+        {}
+    )
 
     if isinstance(carrinho, list):
-        carrinho = {str(item): 1 for item in carrinho}
+        carrinho = {
+            str(item): 1
+            for item in carrinho
+        }
 
     carrinho = dict(carrinho)
 
     if not carrinho:
-        return jsonify({
-            "sucesso": False,
-            "erro": "O carrinho está vazio."
-        }), 400
 
-    nome = request.form.get("nome", "").strip()
-    numero = request.form.get("numero", "").strip()
-    validade = request.form.get("validade", "").strip()
-    cvv = request.form.get("cvv", "").strip()
+        return jsonify(
+            {
+                "sucesso": False,
+                "erro": "O carrinho está vazio."
+            }
+        ), 400
 
-    if not nome or not numero or not validade or not cvv:
-        return jsonify({
-            "sucesso": False,
-            "erro": "Preencha todos os campos do pagamento."
-        }), 400
+    nome = request.form.get(
+        "nome",
+        ""
+    ).strip()
+
+    numero = request.form.get(
+        "numero",
+        ""
+    ).strip()
+
+    validade = request.form.get(
+        "validade",
+        ""
+    ).strip()
+
+    cvv = request.form.get(
+        "cvv",
+        ""
+    ).strip()
+
+    if (
+        not nome
+        or not numero
+        or not validade
+        or not cvv
+    ):
+
+        return jsonify(
+            {
+                "sucesso": False,
+                "erro": (
+                    "Preencha todos os campos "
+                    "do pagamento."
+                )
+            }
+        ), 400
 
     conexao = conectar_banco()
 
     try:
 
         produtos_pagamento = []
+        total = 0
 
+        # Verifica estoque e calcula total
         for id, quantidade in carrinho.items():
 
             produto = conexao.execute(
@@ -298,27 +447,78 @@ def processar_pagamento():
 
                 conexao.rollback()
 
-                return jsonify({
-                    "sucesso": False,
-                    "erro": "Produto não encontrado."
-                }), 404
+                return jsonify(
+                    {
+                        "sucesso": False,
+                        "erro": "Produto não encontrado."
+                    }
+                ), 404
 
             if quantidade > produto["quantidade"]:
 
                 conexao.rollback()
 
-                return jsonify({
-                    "sucesso": False,
-                    "erro": f"Estoque insuficiente para {produto['nome']}."
-                }), 400
+                return jsonify(
+                    {
+                        "sucesso": False,
+                        "erro": (
+                            f"Estoque insuficiente "
+                            f"para {produto['nome']}."
+                        )
+                    }
+                ), 400
 
-            produtos_pagamento.append(
-                (produto["id"], quantidade)
+            subtotal = (
+                produto["preco"]
+                * quantidade
             )
 
-        data_venda = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            total += subtotal
 
-        for produto_id, quantidade in produtos_pagamento:
+            produtos_pagamento.append(
+                (
+                    produto["id"],
+                    quantidade,
+                    produto["preco"]
+                )
+            )
+
+        data_pedido = datetime.now().strftime(
+            "%Y-%m-%d %H:%M:%S"
+        )
+
+        # Cria o pedido
+        cursor = conexao.execute(
+            """
+            INSERT INTO pedidos
+            (data_pedido, total, status)
+            VALUES (?, ?, ?)
+            """,
+            (
+                data_pedido,
+                total,
+                "Concluído"
+            )
+        )
+
+        pedido_id = cursor.lastrowid
+
+        # Salva os itens e atualiza o estoque
+        for produto_id, quantidade, preco in produtos_pagamento:
+
+            conexao.execute(
+                """
+                INSERT INTO itens_pedido
+                (pedido_id, produto_id, quantidade, preco)
+                VALUES (?, ?, ?, ?)
+                """,
+                (
+                    pedido_id,
+                    produto_id,
+                    quantidade,
+                    preco
+                )
+            )
 
             conexao.execute(
                 """
@@ -326,45 +526,347 @@ def processar_pagamento():
                 SET quantidade = quantidade - ?
                 WHERE id = ?
                 """,
-                (quantidade, produto_id)
+                (
+                    quantidade,
+                    produto_id
+                )
             )
 
+            # Mantém o registro de vendas
             conexao.execute(
                 """
                 INSERT INTO vendas
                 (produto_id, quantidade, data_venda)
                 VALUES (?, ?, ?)
                 """,
-                (produto_id, quantidade, data_venda)
+                (
+                    produto_id,
+                    quantidade,
+                    data_pedido
+                )
             )
 
         conexao.commit()
 
         session["carrinho"] = {}
 
-        return jsonify({
-            "sucesso": True,
-            "mensagem": "Pagamento aprovado! Compra concluída."
-        })
+        return jsonify(
+            {
+                "sucesso": True,
+                "mensagem": (
+                    "Pagamento aprovado! "
+                    "Compra concluída."
+                ),
+                "pedido_id": pedido_id
+            }
+        )
 
     except Exception:
 
         conexao.rollback()
 
-        return jsonify({
-            "sucesso": False,
-            "erro": "Não foi possível processar o pagamento."
-        }), 500
+        return jsonify(
+            {
+                "sucesso": False,
+                "erro": (
+                    "Não foi possível "
+                    "processar o pagamento."
+                )
+            }
+        ), 500
 
     finally:
 
         conexao.close()
 
 
+# =========================================
+# LOGIN DO ADMINISTRADOR
+# =========================================
+
+ADMIN_EMAIL = "admin@padaria.com"
+ADMIN_SENHA = "admin123"
+
+
+@app.route(
+    "/admin/login",
+    methods=["POST"]
+)
+def admin_login():
+
+    dados = request.get_json(
+        silent=True
+    ) or {}
+
+    email = dados.get(
+        "email",
+        ""
+    ).strip().lower()
+
+    senha = dados.get(
+        "senha",
+        ""
+    )
+
+    if (
+        email == ADMIN_EMAIL
+        and senha == ADMIN_SENHA
+    ):
+
+        session["administrador"] = True
+
+        return jsonify(
+            {
+                "sucesso": True
+            }
+        )
+
+    return jsonify(
+        {
+            "sucesso": False,
+            "erro": "E-mail ou senha de administrador incorretos."
+        }
+    ), 401
+
+
+@app.route("/admin/logout")
+def admin_logout():
+
+    session.pop(
+        "administrador",
+        None
+    )
+
+    return redirect(
+        url_for("admin")
+    )
+
+
+# =========================================
+# ÁREA DO ADMINISTRADOR
+# =========================================
+
+@app.route("/admin")
+def admin():
+
+    return render_template(
+        "admin.html"
+    )
+
+
+@app.route("/admin/pedidos")
+def admin_pedidos():
+
+    if not session.get(
+        "administrador",
+        False
+    ):
+
+        return jsonify(
+            {
+                "sucesso": False,
+                "erro": "Acesso não autorizado."
+            }
+        ), 401
+
+    conexao = conectar_banco()
+
+    pedidos = conexao.execute(
+        """
+        SELECT
+            id,
+            data_pedido,
+            total,
+            status
+        FROM pedidos
+        ORDER BY id DESC
+        """
+    ).fetchall()
+
+    resultado = []
+
+    for pedido in pedidos:
+
+        itens = conexao.execute(
+            """
+            SELECT
+                itens_pedido.produto_id,
+                produtos.nome,
+                itens_pedido.quantidade,
+                itens_pedido.preco
+            FROM itens_pedido
+            INNER JOIN produtos
+                ON produtos.id = itens_pedido.produto_id
+            WHERE itens_pedido.pedido_id = ?
+            """,
+            (pedido["id"],)
+        ).fetchall()
+
+        lista_itens = []
+
+        for item in itens:
+
+            lista_itens.append(
+                {
+                    "produto_id": item["produto_id"],
+                    "nome": item["nome"],
+                    "quantidade": item["quantidade"],
+                    "preco": item["preco"]
+                }
+            )
+
+        resultado.append(
+            {
+                "id": pedido["id"],
+                "data_pedido": pedido["data_pedido"],
+                "total": pedido["total"],
+                "status": pedido["status"],
+                "itens": lista_itens
+            }
+        )
+
+    conexao.close()
+
+    return jsonify(
+        {
+            "sucesso": True,
+            "pedidos": resultado
+        }
+    )
+
+
+# =========================================
+# CANCELAR PEDIDO
+# =========================================
+
+@app.route(
+    "/admin/cancelar/<int:pedido_id>",
+    methods=["POST"]
+)
+def cancelar_pedido(pedido_id):
+
+    if not session.get(
+        "administrador",
+        False
+    ):
+
+        return jsonify(
+            {
+                "sucesso": False,
+                "erro": "Acesso não autorizado."
+            }
+        ), 401
+
+    conexao = conectar_banco()
+
+    try:
+
+        pedido = conexao.execute(
+            """
+            SELECT *
+            FROM pedidos
+            WHERE id = ?
+            """,
+            (pedido_id,)
+        ).fetchone()
+
+        if not pedido:
+
+            return jsonify(
+                {
+                    "sucesso": False,
+                    "erro": "Pedido não encontrado."
+                }
+            ), 404
+
+        if pedido["status"] == "Cancelado":
+
+            return jsonify(
+                {
+                    "sucesso": False,
+                    "erro": "Este pedido já foi cancelado."
+                }
+            ), 400
+
+        itens = conexao.execute(
+            """
+            SELECT
+                produto_id,
+                quantidade
+            FROM itens_pedido
+            WHERE pedido_id = ?
+            """,
+            (pedido_id,)
+        ).fetchall()
+
+        # Devolve os produtos ao estoque
+        for item in itens:
+
+            conexao.execute(
+                """
+                UPDATE produtos
+                SET quantidade = quantidade + ?
+                WHERE id = ?
+                """,
+                (
+                    item["quantidade"],
+                    item["produto_id"]
+                )
+            )
+
+        # Marca o pedido como cancelado
+        conexao.execute(
+            """
+            UPDATE pedidos
+            SET status = 'Cancelado'
+            WHERE id = ?
+            """,
+            (pedido_id,)
+        )
+
+        conexao.commit()
+
+        return jsonify(
+            {
+                "sucesso": True,
+                "mensagem": (
+                    f"Pedido #{pedido_id} "
+                    "cancelado com sucesso. "
+                    "O estoque foi devolvido."
+                )
+            }
+        )
+
+    except Exception:
+
+        conexao.rollback()
+
+        return jsonify(
+            {
+                "sucesso": False,
+                "erro": (
+                    "Não foi possível "
+                    "cancelar o pedido."
+                )
+            }
+        ), 500
+
+    finally:
+
+        conexao.close()
+
+
+# =========================================
+# RELATÓRIOS
+# =========================================
+
 @app.route("/relatorios")
 def relatorios():
 
-    periodo = request.args.get("periodo", "semanal")
+    periodo = request.args.get(
+        "periodo",
+        "semanal"
+    )
 
     dados_ficticios = {
         "diario": [37, 54, 42],
@@ -378,14 +880,21 @@ def relatorios():
     conexao = conectar_banco()
 
     nomes_produtos = conexao.execute(
-        "SELECT nome FROM produtos ORDER BY id"
+        """
+        SELECT nome
+        FROM produtos
+        ORDER BY id
+        """
     ).fetchall()
 
     vendas_reais = conexao.execute(
         """
         SELECT
             produtos.nome,
-            COALESCE(SUM(vendas.quantidade), 0) AS total_vendido
+            COALESCE(
+                SUM(vendas.quantidade),
+                0
+            ) AS total_vendido
         FROM produtos
         LEFT JOIN vendas
             ON produtos.id = vendas.produto_id
@@ -396,7 +905,10 @@ def relatorios():
 
     conexao.close()
 
-    nomes = [produto["nome"] for produto in nomes_produtos]
+    nomes = [
+        produto["nome"]
+        for produto in nomes_produtos
+    ]
 
     possui_vendas_reais = any(
         venda["total_vendido"] > 0
@@ -412,7 +924,9 @@ def relatorios():
 
     else:
 
-        quantidades = dados_ficticios[periodo]
+        quantidades = dados_ficticios[
+            periodo
+        ]
 
     return render_template(
         "relatorios.html",
@@ -423,5 +937,12 @@ def relatorios():
     )
 
 
+# =========================================
+# EXECUÇÃO
+# =========================================
+
 if __name__ == "__main__":
-    app.run(debug=True)
+
+    app.run(
+        debug=True
+    )
