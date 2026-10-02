@@ -1,4 +1,4 @@
-# Quatro-Gera-es
+# Quatro-Gerações
 
 #Sobre o projeto
 Este repositório contém os arquivos utilizados para a criação e desenvolvimento do site, incluindo a estrutura, o estilo e os demais recursos necessários para o projeto.
