@@ -12,9 +12,9 @@ JavaScript
 Desenvolver um site aplicando os conhecimentos aprendidos durante as aulas de desenvolvimento de sistemas.
 
 # Desenvolvido por:
-Amanda Schäfer
-Emilly Paiano Schuster
-Luíza Maurer Mairesse
-Mariana Altenhofen Heberle
+Amanda Schäfer,
+Emilly Paiano Schuster,
+Luíza Maurer Mairesse,
+Mariana Altenhofen Heberle.
 
 Projeto acadêmico — SENAI.
