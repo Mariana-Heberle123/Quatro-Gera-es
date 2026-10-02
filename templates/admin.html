@@ -2,29 +2,41 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Administrador - Padaria 4 Gerações</title>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Administrador - Padaria 4 Gerações
+    </title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
+
 
 <body class="bg-amber-50 min-h-screen flex flex-col text-gray-800">
 
-    <!-- Cabeçalho -->
+
+    <!-- CABEÇALHO -->
+
     <header class="bg-amber-900 text-amber-100 shadow-lg">
 
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-6 py-4
+                    flex justify-between items-center">
 
             <div class="flex items-center space-x-3">
 
-                <i class="fa-solid fa-wheat-awn text-3xl text-amber-400"></i>
+                <i class="fa-solid fa-wheat-awn
+                          text-3xl text-amber-400"></i>
 
                 <div>
+
                     <h1 class="text-2xl font-extrabold text-white">
                         4 GERAÇÕES
                     </h1>
@@ -32,80 +44,159 @@
                     <p class="text-xs text-amber-300">
                         Área do Administrador
                     </p>
+
                 </div>
 
             </div>
 
-            <a href="/"
-               class="text-amber-200 hover:text-white text-xl"
-               title="Início">
 
-                <i class="fa-solid fa-house"></i>
+            <div class="flex items-center space-x-5">
 
-            </a>
+                <a href="/relatorios"
+                   class="text-amber-200
+                          hover:text-amber-400
+                          text-xl"
+                   title="Relatórios">
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                </a>
+
+
+                <a href="/"
+                   class="text-amber-200
+                          hover:text-white
+                          text-xl"
+                   title="Início">
+
+                    <i class="fa-solid fa-house"></i>
+
+                </a>
+
+            </div>
 
         </div>
 
     </header>
 
 
-    <!-- Conteúdo -->
-    <main class="max-w-6xl mx-auto px-6 py-12 w-full">
+    <!-- CONTEÚDO -->
 
-        <!-- Login -->
+    <main class="max-w-7xl mx-auto px-6 py-12 w-full">
+
+
+        <!-- LOGIN -->
+
         <div id="areaLogin"
-             class="max-w-md mx-auto bg-white rounded-[30px] shadow-lg border border-amber-100 p-8">
+             class="max-w-md mx-auto bg-white
+                    rounded-[30px]
+                    shadow-lg
+                    border border-amber-100
+                    p-8">
 
             <div class="text-center mb-7">
 
-                <i class="fa-solid fa-user-shield text-amber-700 text-5xl"></i>
+                <i class="fa-solid fa-user-shield
+                          text-amber-700
+                          text-5xl"></i>
 
-                <h2 class="text-3xl font-extrabold text-amber-950 mt-4">
+                <h2 class="text-3xl
+                           font-extrabold
+                           text-amber-950
+                           mt-4">
+
                     Administrador
+
                 </h2>
 
                 <p class="text-gray-600 mt-2">
-                    Entre para acessar os pedidos
+                    Entre para acessar o painel
                 </p>
 
             </div>
 
 
             <div id="erroLogin"
-                 class="hidden bg-red-100 text-red-700 rounded-xl p-3 mb-5 text-sm">
+                 class="hidden
+                        bg-red-100
+                        text-red-700
+                        rounded-xl
+                        p-3
+                        mb-5
+                        text-sm">
+
             </div>
 
 
             <form id="formLogin">
 
-                <label class="block text-sm font-bold text-amber-950 mb-2">
+
+                <label class="block
+                              text-sm
+                              font-bold
+                              text-amber-950
+                              mb-2">
+
                     E-mail
+
                 </label>
+
 
                 <input
                     type="email"
                     id="email"
                     required
-                    class="w-full border border-amber-200 rounded-xl px-4 py-3 mb-5 outline-none focus:ring-2 focus:ring-amber-500"
+                    class="w-full
+                           border
+                           border-amber-200
+                           rounded-xl
+                           px-4
+                           py-3
+                           mb-5
+                           outline-none
+                           focus:ring-2
+                           focus:ring-amber-500"
                     placeholder="admin@padaria.com">
 
 
-                <label class="block text-sm font-bold text-amber-950 mb-2">
+                <label class="block
+                              text-sm
+                              font-bold
+                              text-amber-950
+                              mb-2">
+
                     Senha
+
                 </label>
+
 
                 <input
                     type="password"
                     id="senha"
                     required
-                    class="w-full border border-amber-200 rounded-xl px-4 py-3 mb-6 outline-none focus:ring-2 focus:ring-amber-500"
+                    class="w-full
+                           border
+                           border-amber-200
+                           rounded-xl
+                           px-4
+                           py-3
+                           mb-6
+                           outline-none
+                           focus:ring-2
+                           focus:ring-amber-500"
                     placeholder="Digite a senha">
 
 
                 <button
                     type="submit"
                     id="botaoLogin"
-                    class="w-full bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold py-3 rounded-xl transition">
+                    class="w-full
+                           bg-amber-500
+                           hover:bg-amber-600
+                           text-amber-950
+                           font-bold
+                           py-3
+                           rounded-xl">
 
                     Entrar
 
@@ -116,20 +207,35 @@
         </div>
 
 
-        <!-- Painel do Administrador -->
+        <!-- PAINEL -->
+
         <div id="painelAdmin"
              class="hidden">
 
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+
+            <!-- TÍTULO -->
+
+            <div class="flex
+                        flex-col
+                        md:flex-row
+                        justify-between
+                        items-start
+                        md:items-center
+                        gap-4
+                        mb-10">
 
                 <div>
 
-                    <h2 class="text-4xl font-extrabold text-amber-950">
-                        Pedidos
+                    <h2 class="text-4xl
+                               font-extrabold
+                               text-amber-950">
+
+                        Painel do Administrador
+
                     </h2>
 
                     <p class="text-gray-600 mt-2">
-                        Consulte e gerencie os pedidos realizados.
+                        Gerencie produtos e pedidos.
                     </p>
 
                 </div>
@@ -137,9 +243,16 @@
 
                 <button
                     id="botaoSair"
-                    class="bg-amber-950 hover:bg-amber-900 text-white font-bold px-6 py-3 rounded-xl transition">
+                    class="bg-amber-950
+                           hover:bg-amber-900
+                           text-white
+                           font-bold
+                           px-6
+                           py-3
+                           rounded-xl">
 
                     <i class="fa-solid fa-right-from-bracket mr-2"></i>
+
                     Sair
 
                 </button>
@@ -147,42 +260,126 @@
             </div>
 
 
+            <!-- MENSAGEM -->
+
             <div id="mensagem"
-                 class="hidden rounded-xl p-4 mb-6 text-sm">
-            </div>
-
-
-            <div id="listaPedidos"
-                 class="space-y-6">
-
-            </div>
-
-
-            <div id="semPedidos"
-                 class="hidden bg-white rounded-[30px] shadow-lg border border-amber-100 p-10 text-center">
-
-                <i class="fa-solid fa-receipt text-amber-600 text-5xl"></i>
-
-                <h3 class="text-2xl font-extrabold text-amber-950 mt-4">
-                    Nenhum pedido encontrado
-                </h3>
-
-                <p class="text-gray-600 mt-2">
-                    Os pedidos realizados aparecerão aqui.
-                </p>
+                 class="hidden
+                        rounded-xl
+                        p-4
+                        mb-8
+                        text-sm">
 
             </div>
+
+
+            <!-- PRODUTOS -->
+
+            <section class="mb-12">
+
+
+                <div class="mb-6">
+
+                    <h3 class="text-3xl
+                               font-extrabold
+                               text-amber-950">
+
+                        Produtos
+
+                    </h3>
+
+                    <p class="text-gray-600 mt-1">
+                        Altere o nome, preço de venda e custo de produção.
+                    </p>
+
+                </div>
+
+
+                <div id="listaProdutos"
+                     class="grid
+                            grid-cols-1
+                            md:grid-cols-2
+                            lg:grid-cols-3
+                            gap-6">
+
+                </div>
+
+            </section>
+
+
+            <!-- PEDIDOS -->
+
+            <section>
+
+                <div class="mb-6">
+
+                    <h3 class="text-3xl
+                               font-extrabold
+                               text-amber-950">
+
+                        Pedidos
+
+                    </h3>
+
+                    <p class="text-gray-600 mt-1">
+                        Visualize e cancele pedidos.
+                    </p>
+
+                </div>
+
+
+                <div id="listaPedidos"
+                     class="space-y-6">
+
+                </div>
+
+
+                <div id="semPedidos"
+                     class="hidden
+                            bg-white
+                            rounded-[30px]
+                            shadow-lg
+                            border
+                            border-amber-100
+                            p-10
+                            text-center">
+
+                    <i class="fa-solid fa-receipt
+                              text-amber-600
+                              text-5xl"></i>
+
+                    <h3 class="text-2xl
+                               font-extrabold
+                               text-amber-950
+                               mt-4">
+
+                        Nenhum pedido encontrado
+
+                    </h3>
+
+                </div>
+
+            </section>
+
 
         </div>
 
     </main>
 
 
-    <!-- Rodapé -->
-    <footer class="bg-amber-950 text-amber-200/70 text-center py-6 mt-auto">
+    <!-- RODAPÉ -->
+
+    <footer class="bg-amber-950
+                   text-amber-200/70
+                   text-center
+                   py-6
+                   mt-auto">
 
         <p class="text-sm">
-            Padaria 4 Gerações &copy; Todos os direitos reservados.
+
+            Padaria 4 Gerações
+            &copy;
+            Todos os direitos reservados.
+
         </p>
 
     </footer>
@@ -190,22 +387,42 @@
 
     <script>
 
-        const areaLogin = document.getElementById("areaLogin");
-        const painelAdmin = document.getElementById("painelAdmin");
 
-        const formLogin = document.getElementById("formLogin");
-        const erroLogin = document.getElementById("erroLogin");
-        const botaoLogin = document.getElementById("botaoLogin");
+        const areaLogin =
+            document.getElementById("areaLogin");
 
-        const listaPedidos = document.getElementById("listaPedidos");
-        const semPedidos = document.getElementById("semPedidos");
+        const painelAdmin =
+            document.getElementById("painelAdmin");
 
-        const mensagem = document.getElementById("mensagem");
+        const formLogin =
+            document.getElementById("formLogin");
 
-        const botaoSair = document.getElementById("botaoSair");
+        const erroLogin =
+            document.getElementById("erroLogin");
+
+        const botaoLogin =
+            document.getElementById("botaoLogin");
+
+        const listaProdutos =
+            document.getElementById("listaProdutos");
+
+        const listaPedidos =
+            document.getElementById("listaPedidos");
+
+        const semPedidos =
+            document.getElementById("semPedidos");
+
+        const mensagem =
+            document.getElementById("mensagem");
+
+        const botaoSair =
+            document.getElementById("botaoSair");
 
 
-        function mostrarMensagem(texto, sucesso = true) {
+        function mostrarMensagem(
+            texto,
+            sucesso = true
+        ) {
 
             mensagem.textContent = texto;
 
@@ -216,6 +433,7 @@
                 "bg-red-100",
                 "text-red-700"
             );
+
 
             if (sucesso) {
 
@@ -236,103 +454,121 @@
         }
 
 
-        async function entrarAdministrador(email, senha) {
-
-            botaoLogin.disabled = true;
-            botaoLogin.textContent = "Entrando...";
-
-            erroLogin.classList.add("hidden");
-
-            try {
-
-                const resposta = await fetch(
-                    "/admin/login",
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-
-                        body: JSON.stringify({
-                            email: email,
-                            senha: senha
-                        })
-                    }
-                );
-
-
-                const resultado = await resposta.json();
-
-
-                if (!resultado.sucesso) {
-
-                    erroLogin.textContent = resultado.erro;
-
-                    erroLogin.classList.remove("hidden");
-
-                    botaoLogin.disabled = false;
-                    botaoLogin.textContent = "Entrar";
-
-                    return;
-
-                }
-
-
-                areaLogin.classList.add("hidden");
-
-                painelAdmin.classList.remove("hidden");
-
-                carregarPedidos();
-
-
-            } catch (erro) {
-
-                erroLogin.textContent =
-                    "Não foi possível conectar ao servidor.";
-
-                erroLogin.classList.remove("hidden");
-
-                botaoLogin.disabled = false;
-                botaoLogin.textContent = "Entrar";
-
-            }
-
-        }
-
+        // ======================================
+        // LOGIN
+        // ======================================
 
         formLogin.addEventListener(
             "submit",
-            function (evento) {
+            async function(evento) {
 
                 evento.preventDefault();
 
                 const email =
-                    document.getElementById("email").value.trim();
+                    document.getElementById("email")
+                    .value
+                    .trim();
 
                 const senha =
-                    document.getElementById("senha").value;
+                    document.getElementById("senha")
+                    .value;
 
-                entrarAdministrador(
-                    email,
-                    senha
-                );
+                erroLogin.classList.add("hidden");
+
+                botaoLogin.disabled = true;
+                botaoLogin.textContent = "Entrando...";
+
+
+                try {
+
+                    const resposta =
+                        await fetch(
+                            "/admin/login",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:
+                                    JSON.stringify({
+                                        email: email,
+                                        senha: senha
+                                    })
+                            }
+                        );
+
+
+                    const resultado =
+                        await resposta.json();
+
+
+                    if (!resultado.sucesso) {
+
+                        erroLogin.textContent =
+                            resultado.erro;
+
+                        erroLogin.classList.remove(
+                            "hidden"
+                        );
+
+                        botaoLogin.disabled = false;
+
+                        botaoLogin.textContent =
+                            "Entrar";
+
+                        return;
+
+                    }
+
+
+                    areaLogin.classList.add(
+                        "hidden"
+                    );
+
+                    painelAdmin.classList.remove(
+                        "hidden"
+                    );
+
+
+                    carregarProdutos();
+                    carregarPedidos();
+
+
+                } catch (erro) {
+
+                    erroLogin.textContent =
+                        "Não foi possível conectar ao servidor.";
+
+                    erroLogin.classList.remove(
+                        "hidden"
+                    );
+
+                    botaoLogin.disabled = false;
+
+                    botaoLogin.textContent =
+                        "Entrar";
+
+                }
 
             }
         );
 
 
-        async function carregarPedidos() {
+        // ======================================
+        // PRODUTOS
+        // ======================================
 
-            listaPedidos.innerHTML = "";
-
-            semPedidos.classList.add("hidden");
+        async function carregarProdutos() {
 
             try {
 
-                const resposta = await fetch(
-                    "/admin/pedidos"
-                );
+                const resposta =
+                    await fetch(
+                        "/admin/produtos"
+                    );
 
                 const resultado =
                     await resposta.json();
@@ -340,20 +576,325 @@
 
                 if (!resultado.sucesso) {
 
-                    areaLogin.classList.remove("hidden");
-                    painelAdmin.classList.add("hidden");
-
-                    erroLogin.textContent = resultado.erro;
-                    erroLogin.classList.remove("hidden");
+                    mostrarMensagem(
+                        resultado.erro,
+                        false
+                    );
 
                     return;
 
                 }
 
 
-                if (resultado.pedidos.length === 0) {
+                listaProdutos.innerHTML = "";
 
-                    semPedidos.classList.remove("hidden");
+
+                resultado.produtos.forEach(
+                    function(produto) {
+
+                        criarCardProduto(
+                            produto
+                        );
+
+                    }
+                );
+
+
+            } catch (erro) {
+
+                mostrarMensagem(
+                    "Não foi possível carregar os produtos.",
+                    false
+                );
+
+            }
+
+        }
+
+
+        function criarCardProduto(produto) {
+
+            const lucro =
+                Number(produto.lucro);
+
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "bg-white rounded-[30px] shadow-lg border border-amber-100 p-6";
+
+
+            card.innerHTML = `
+
+                <div class="flex justify-between items-start mb-5">
+
+                    <div>
+
+                        <h4 class="text-xl font-extrabold text-amber-950">
+
+                            ${produto.nome}
+
+                        </h4>
+
+                        <p class="text-sm text-gray-500 mt-1">
+
+                            Estoque:
+                            ${produto.quantidade}
+                            unidade(s)
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <label class="block text-sm font-bold text-amber-950 mb-2">
+
+                    Nome
+
+                </label>
+
+                <input
+                    type="text"
+                    id="nome-${produto.id}"
+                    value="${produto.nome}"
+                    class="w-full border border-amber-200 rounded-xl px-4 py-3 mb-4">
+
+
+                <label class="block text-sm font-bold text-amber-950 mb-2">
+
+                    Preço de venda
+
+                </label>
+
+                <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    id="preco-${produto.id}"
+                    value="${Number(produto.preco).toFixed(2)}"
+                    class="w-full border border-amber-200 rounded-xl px-4 py-3 mb-4">
+
+
+                <label class="block text-sm font-bold text-amber-950 mb-2">
+
+                    Custo de produção
+
+                </label>
+
+                <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    id="custo-${produto.id}"
+                    value="${Number(produto.custo_producao).toFixed(2)}"
+                    class="w-full border border-amber-200 rounded-xl px-4 py-3 mb-4">
+
+
+                <div class="bg-amber-50 rounded-xl p-4 mb-5">
+
+                    <div class="flex justify-between">
+
+                        <span class="text-gray-600">
+                            Venda:
+                        </span>
+
+                        <strong class="text-amber-900">
+
+                            R$
+                            ${Number(produto.preco)
+                                .toFixed(2)
+                                .replace(".", ",")}
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="flex justify-between mt-2">
+
+                        <span class="text-gray-600">
+                            Produção:
+                        </span>
+
+                        <strong class="text-red-700">
+
+                            R$
+                            ${Number(produto.custo_producao)
+                                .toFixed(2)
+                                .replace(".", ",")}
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="flex justify-between mt-2">
+
+                        <span class="text-gray-600">
+                            Lucro por unidade:
+                        </span>
+
+                        <strong class="text-green-700">
+
+                            R$
+                            ${lucro
+                                .toFixed(2)
+                                .replace(".", ",")}
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    onclick="salvarProduto(${produto.id})"
+                    class="w-full bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold py-3 rounded-xl">
+
+                    <i class="fa-solid fa-floppy-disk mr-2"></i>
+
+                    Salvar alterações
+
+                </button>
+
+            `;
+
+
+            listaProdutos.appendChild(
+                card
+            );
+
+        }
+
+
+        async function salvarProduto(id) {
+
+            const nome =
+                document.getElementById(
+                    "nome-" + id
+                ).value.trim();
+
+
+            const preco =
+                document.getElementById(
+                    "preco-" + id
+                ).value;
+
+
+            const custo =
+                document.getElementById(
+                    "custo-" + id
+                ).value;
+
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        "/admin/produtos/" + id,
+                        {
+                            method: "PUT",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    nome: nome,
+                                    preco: preco,
+                                    custo_producao: custo
+                                })
+                        }
+                    );
+
+
+                const resultado =
+                    await resposta.json();
+
+
+                if (!resultado.sucesso) {
+
+                    mostrarMensagem(
+                        resultado.erro,
+                        false
+                    );
+
+                    return;
+
+                }
+
+
+                mostrarMensagem(
+                    resultado.mensagem,
+                    true
+                );
+
+
+                carregarProdutos();
+
+
+            } catch (erro) {
+
+                mostrarMensagem(
+                    "Não foi possível atualizar o produto.",
+                    false
+                );
+
+            }
+
+        }
+
+
+        // ======================================
+        // PEDIDOS
+        // ======================================
+
+        async function carregarPedidos() {
+
+            listaPedidos.innerHTML = "";
+
+            semPedidos.classList.add(
+                "hidden"
+            );
+
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        "/admin/pedidos"
+                    );
+
+                const resultado =
+                    await resposta.json();
+
+
+                if (!resultado.sucesso) {
+
+                    mostrarMensagem(
+                        resultado.erro,
+                        false
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    resultado.pedidos.length === 0
+                ) {
+
+                    semPedidos.classList.remove(
+                        "hidden"
+                    );
 
                     return;
 
@@ -361,9 +902,11 @@
 
 
                 resultado.pedidos.forEach(
-                    function (pedido) {
+                    function(pedido) {
 
-                        criarPedido(pedido);
+                        criarPedido(
+                            pedido
+                        );
 
                     }
                 );
@@ -386,6 +929,7 @@
             const card =
                 document.createElement("div");
 
+
             card.className =
                 "bg-white rounded-[30px] shadow-lg border border-amber-100 p-6";
 
@@ -394,55 +938,98 @@
 
 
             pedido.itens.forEach(
-                function (item) {
+                function(item) {
 
                     const subtotal =
-                        item.quantidade * item.preco;
+                        Number(item.quantidade)
+                        * Number(item.preco);
 
 
                     itensHTML += `
+
                         <div class="flex justify-between items-center py-3 border-b border-amber-100">
 
                             <div>
+
                                 <p class="font-bold text-amber-950">
+
                                     ${item.nome}
+
                                 </p>
 
                                 <p class="text-sm text-gray-500">
-                                    ${item.quantidade} unidade(s)
+
+                                    ${item.quantidade}
+                                    unidade(s)
+
                                 </p>
+
                             </div>
 
                             <p class="font-bold text-amber-900">
-                                R$ ${subtotal.toFixed(2).replace(".", ",")}
+
+                                R$
+                                ${subtotal
+                                    .toFixed(2)
+                                    .replace(".", ",")}
+
                             </p>
 
                         </div>
+
                     `;
 
                 }
             );
 
 
-            let statusHTML;
+            let statusHTML = "";
 
 
-            if (pedido.status === "Cancelado") {
+            if (
+                pedido.status === "Cancelado"
+            ) {
 
                 statusHTML = `
-                    <span class="inline-flex items-center bg-red-100 text-red-700 px-4 py-2 rounded-full font-bold text-sm">
+
+                    <span class="inline-flex
+                                 items-center
+                                 bg-red-100
+                                 text-red-700
+                                 px-4
+                                 py-2
+                                 rounded-full
+                                 font-bold
+                                 text-sm">
+
                         <i class="fa-solid fa-ban mr-2"></i>
+
                         Cancelado
+
                     </span>
+
                 `;
 
             } else {
 
                 statusHTML = `
-                    <span class="inline-flex items-center bg-green-100 text-green-700 px-4 py-2 rounded-full font-bold text-sm">
+
+                    <span class="inline-flex
+                                 items-center
+                                 bg-green-100
+                                 text-green-700
+                                 px-4
+                                 py-2
+                                 rounded-full
+                                 font-bold
+                                 text-sm">
+
                         <i class="fa-solid fa-circle-check mr-2"></i>
+
                         Concluído
+
                     </span>
+
                 `;
 
             }
@@ -451,17 +1038,30 @@
             let botaoCancelar = "";
 
 
-            if (pedido.status !== "Cancelado") {
+            if (
+                pedido.status !== "Cancelado"
+            ) {
 
                 botaoCancelar = `
+
                     <button
                         onclick="cancelarPedido(${pedido.id})"
-                        class="w-full md:w-auto bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3 rounded-xl transition">
+                        class="w-full
+                               md:w-auto
+                               bg-red-600
+                               hover:bg-red-700
+                               text-white
+                               font-bold
+                               px-6
+                               py-3
+                               rounded-xl">
 
                         <i class="fa-solid fa-ban mr-2"></i>
+
                         Cancelar pedido
 
                     </button>
+
                 `;
 
             }
@@ -469,22 +1069,35 @@
 
             card.innerHTML = `
 
-                <div class="flex flex-col md:flex-row justify-between gap-4 mb-5">
+                <div class="flex
+                            flex-col
+                            md:flex-row
+                            justify-between
+                            gap-4
+                            mb-5">
 
                     <div>
 
-                        <h3 class="text-2xl font-extrabold text-amber-950">
+                        <h3 class="text-2xl
+                                   font-extrabold
+                                   text-amber-950">
+
                             Pedido #${pedido.id}
+
                         </h3>
 
                         <p class="text-gray-500 mt-1">
+
                             ${pedido.data_pedido}
+
                         </p>
 
                     </div>
 
                     <div>
+
                         ${statusHTML}
+
                     </div>
 
                 </div>
@@ -497,7 +1110,13 @@
                 </div>
 
 
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="flex
+                            flex-col
+                            md:flex-row
+                            justify-between
+                            items-start
+                            md:items-center
+                            gap-4">
 
                     <div>
 
@@ -505,11 +1124,19 @@
                             Total do pedido
                         </p>
 
-                        <p class="text-2xl font-extrabold text-amber-900">
-                            R$ ${Number(pedido.total).toFixed(2).replace(".", ",")}
+                        <p class="text-2xl
+                                   font-extrabold
+                                   text-amber-900">
+
+                            R$
+                            ${Number(pedido.total)
+                                .toFixed(2)
+                                .replace(".", ",")}
+
                         </p>
 
                     </div>
+
 
                     ${botaoCancelar}
 
@@ -518,18 +1145,22 @@
             `;
 
 
-            listaPedidos.appendChild(card);
+            listaPedidos.appendChild(
+                card
+            );
 
         }
 
 
-        async function cancelarPedido(pedidoId) {
+        async function cancelarPedido(
+            pedidoId
+        ) {
 
             const confirmar =
                 window.confirm(
-                    "Tem certeza que deseja cancelar o pedido #" +
-                    pedidoId +
-                    "?"
+                    "Tem certeza que deseja cancelar o pedido #"
+                    + pedidoId
+                    + "?"
                 );
 
 
@@ -540,12 +1171,14 @@
 
             try {
 
-                const resposta = await fetch(
-                    "/admin/cancelar/" + pedidoId,
-                    {
-                        method: "POST"
-                    }
-                );
+                const resposta =
+                    await fetch(
+                        "/admin/cancelar/"
+                        + pedidoId,
+                        {
+                            method: "POST"
+                        }
+                    );
 
 
                 const resultado =
@@ -572,7 +1205,6 @@
 
                 carregarPedidos();
 
-
             } catch (erro) {
 
                 mostrarMensagem(
@@ -585,18 +1217,30 @@
         }
 
 
+        // ======================================
+        // SAIR
+        // ======================================
+
         botaoSair.addEventListener(
             "click",
-            async function () {
+            async function() {
 
                 await fetch(
                     "/admin/logout"
                 );
 
-                painelAdmin.classList.add("hidden");
-                areaLogin.classList.remove("hidden");
+                painelAdmin.classList.add(
+                    "hidden"
+                );
+
+                areaLogin.classList.remove(
+                    "hidden"
+                );
 
                 formLogin.reset();
+
+                listaProdutos.innerHTML = "";
+                listaPedidos.innerHTML = "";
 
             }
         );

@@ -7,15 +7,42 @@ app = Flask(__name__)
 app.secret_key = "padaria4geracoes"
 
 
+# =========================================
+# BANCO DE DADOS
+# =========================================
+
 def conectar_banco():
     conexao = sqlite3.connect("padaria.db")
     conexao.row_factory = sqlite3.Row
     return conexao
 
 
+def adicionar_coluna_se_nao_existir(conexao, tabela, coluna, definicao):
+
+    colunas = conexao.execute(
+        f"PRAGMA table_info({tabela})"
+    ).fetchall()
+
+    nomes_colunas = [
+        coluna_banco["name"]
+        for coluna_banco in colunas
+    ]
+
+    if coluna not in nomes_colunas:
+
+        conexao.execute(
+            f"""
+            ALTER TABLE {tabela}
+            ADD COLUMN {coluna} {definicao}
+            """
+        )
+
+
 def criar_tabelas():
+
     conexao = conectar_banco()
 
+    # Tabela de vendas
     conexao.execute(
         """
         CREATE TABLE IF NOT EXISTS vendas (
@@ -23,11 +50,13 @@ def criar_tabelas():
             produto_id INTEGER NOT NULL,
             quantidade INTEGER NOT NULL,
             data_venda TEXT NOT NULL,
+            pedido_id INTEGER,
             FOREIGN KEY (produto_id) REFERENCES produtos(id)
         )
         """
     )
 
+    # Tabela de pedidos
     conexao.execute(
         """
         CREATE TABLE IF NOT EXISTS pedidos (
@@ -39,6 +68,7 @@ def criar_tabelas():
         """
     )
 
+    # Tabela de itens dos pedidos
     conexao.execute(
         """
         CREATE TABLE IF NOT EXISTS itens_pedido (
@@ -50,6 +80,63 @@ def criar_tabelas():
             FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
             FOREIGN KEY (produto_id) REFERENCES produtos(id)
         )
+        """
+    )
+
+    # Colunas novas
+    adicionar_coluna_se_nao_existir(
+        conexao,
+        "produtos",
+        "custo_producao",
+        "REAL DEFAULT 0"
+    )
+
+    adicionar_coluna_se_nao_existir(
+        conexao,
+        "produtos",
+        "avaliacao",
+        "REAL DEFAULT 5.0"
+    )
+
+    adicionar_coluna_se_nao_existir(
+        conexao,
+        "vendas",
+        "pedido_id",
+        "INTEGER"
+    )
+
+    adicionar_coluna_se_nao_existir(
+        conexao,
+        "itens_pedido",
+        "custo_producao",
+        "REAL DEFAULT 0"
+    )
+
+    # Valores iniciais de produção para os produtos existentes
+    conexao.execute(
+        """
+        UPDATE produtos
+        SET custo_producao = 0.40
+        WHERE nome = 'Pão francês'
+        AND (custo_producao IS NULL OR custo_producao = 0)
+        """
+    )
+
+    conexao.execute(
+        """
+        UPDATE produtos
+        SET custo_producao = 3.50
+        WHERE nome = 'Pão de forma'
+        AND (custo_producao IS NULL OR custo_producao = 0)
+        """
+    )
+
+    conexao.execute(
+        """
+        UPDATE produtos
+        SET custo_producao = 2.80
+        WHERE nome = 'Pão de milho'
+        AND (custo_producao IS NULL OR custo_producao = 0)
         """
     )
 
@@ -70,7 +157,7 @@ def inicio():
     conexao = conectar_banco()
 
     produtos = conexao.execute(
-        "SELECT * FROM produtos"
+        "SELECT * FROM produtos ORDER BY id"
     ).fetchall()
 
     conexao.close()
@@ -91,7 +178,7 @@ def produtos():
     conexao = conectar_banco()
 
     produtos = conexao.execute(
-        "SELECT * FROM produtos"
+        "SELECT * FROM produtos ORDER BY id"
     ).fetchall()
 
     conexao.close()
@@ -133,6 +220,7 @@ def adicionar_carrinho(id):
     carrinho = session.get("carrinho", {})
 
     if isinstance(carrinho, list):
+
         carrinho = {
             str(item): 1
             for item in carrinho
@@ -143,7 +231,11 @@ def adicionar_carrinho(id):
     conexao = conectar_banco()
 
     produto = conexao.execute(
-        "SELECT quantidade FROM produtos WHERE id = ?",
+        """
+        SELECT quantidade
+        FROM produtos
+        WHERE id = ?
+        """,
         (id,)
     ).fetchone()
 
@@ -159,7 +251,10 @@ def adicionar_carrinho(id):
     )
 
     if quantidade_atual < produto["quantidade"]:
-        carrinho[id] = quantidade_atual + 1
+
+        carrinho[id] = (
+            quantidade_atual + 1
+        )
 
     session["carrinho"] = carrinho
 
@@ -174,6 +269,7 @@ def diminuir_carrinho(id):
     carrinho = session.get("carrinho", {})
 
     if isinstance(carrinho, list):
+
         carrinho = {
             str(item): 1
             for item in carrinho
@@ -203,6 +299,7 @@ def remover_carrinho(id):
     carrinho = session.get("carrinho", {})
 
     if isinstance(carrinho, list):
+
         carrinho = {
             str(item): 1
             for item in carrinho
@@ -228,6 +325,7 @@ def carrinho():
     carrinho = session.get("carrinho", {})
 
     if isinstance(carrinho, list):
+
         carrinho = {
             str(item): 1
             for item in carrinho
@@ -243,7 +341,11 @@ def carrinho():
     for id, quantidade in carrinho.items():
 
         produto = conexao.execute(
-            "SELECT * FROM produtos WHERE id = ?",
+            """
+            SELECT *
+            FROM produtos
+            WHERE id = ?
+            """,
             (int(id),)
         ).fetchone()
 
@@ -274,7 +376,7 @@ def carrinho():
 
 
 # =========================================
-# LOGIN DO CLIENTE
+# LOGIN
 # =========================================
 
 @app.route("/login")
@@ -298,6 +400,7 @@ def pagamento():
     )
 
     if isinstance(carrinho, list):
+
         carrinho = {
             str(item): 1
             for item in carrinho
@@ -319,7 +422,11 @@ def pagamento():
     for id, quantidade in carrinho.items():
 
         produto = conexao.execute(
-            "SELECT * FROM produtos WHERE id = ?",
+            """
+            SELECT *
+            FROM produtos
+            WHERE id = ?
+            """,
             (int(id),)
         ).fetchone()
 
@@ -375,6 +482,7 @@ def processar_pagamento():
     )
 
     if isinstance(carrinho, list):
+
         carrinho = {
             str(item): 1
             for item in carrinho
@@ -435,11 +543,14 @@ def processar_pagamento():
         produtos_pagamento = []
         total = 0
 
-        # Verifica estoque e calcula total
         for id, quantidade in carrinho.items():
 
             produto = conexao.execute(
-                "SELECT * FROM produtos WHERE id = ?",
+                """
+                SELECT *
+                FROM produtos
+                WHERE id = ?
+                """,
                 (int(id),)
             ).fetchone()
 
@@ -476,22 +587,27 @@ def processar_pagamento():
             total += subtotal
 
             produtos_pagamento.append(
-                (
-                    produto["id"],
-                    quantidade,
-                    produto["preco"]
-                )
+                {
+                    "id": produto["id"],
+                    "quantidade": quantidade,
+                    "preco": produto["preco"],
+                    "custo_producao": produto["custo_producao"]
+                }
             )
 
         data_pedido = datetime.now().strftime(
             "%Y-%m-%d %H:%M:%S"
         )
 
-        # Cria o pedido
+        # Cria pedido
         cursor = conexao.execute(
             """
             INSERT INTO pedidos
-            (data_pedido, total, status)
+            (
+                data_pedido,
+                total,
+                status
+            )
             VALUES (?, ?, ?)
             """,
             (
@@ -503,20 +619,27 @@ def processar_pagamento():
 
         pedido_id = cursor.lastrowid
 
-        # Salva os itens e atualiza o estoque
-        for produto_id, quantidade, preco in produtos_pagamento:
+        # Cria itens e atualiza estoque
+        for item in produtos_pagamento:
 
             conexao.execute(
                 """
                 INSERT INTO itens_pedido
-                (pedido_id, produto_id, quantidade, preco)
-                VALUES (?, ?, ?, ?)
-                """,
                 (
                     pedido_id,
                     produto_id,
                     quantidade,
-                    preco
+                    preco,
+                    custo_producao
+                )
+                VALUES (?, ?, ?, ?, ?)
+                """,
+                (
+                    pedido_id,
+                    item["id"],
+                    item["quantidade"],
+                    item["preco"],
+                    item["custo_producao"]
                 )
             )
 
@@ -527,22 +650,28 @@ def processar_pagamento():
                 WHERE id = ?
                 """,
                 (
-                    quantidade,
-                    produto_id
+                    item["quantidade"],
+                    item["id"]
                 )
             )
 
-            # Mantém o registro de vendas
+            # Registra venda ligada ao pedido
             conexao.execute(
                 """
                 INSERT INTO vendas
-                (produto_id, quantidade, data_venda)
-                VALUES (?, ?, ?)
-                """,
                 (
                     produto_id,
                     quantidade,
-                    data_pedido
+                    data_venda,
+                    pedido_id
+                )
+                VALUES (?, ?, ?, ?)
+                """,
+                (
+                    item["id"],
+                    item["quantidade"],
+                    data_pedido,
+                    pedido_id
                 )
             )
 
@@ -581,7 +710,7 @@ def processar_pagamento():
 
 
 # =========================================
-# LOGIN DO ADMINISTRADOR
+# ADMINISTRADOR
 # =========================================
 
 ADMIN_EMAIL = "admin@padaria.com"
@@ -624,7 +753,10 @@ def admin_login():
     return jsonify(
         {
             "sucesso": False,
-            "erro": "E-mail ou senha de administrador incorretos."
+            "erro": (
+                "E-mail ou senha de administrador "
+                "incorretos."
+            )
         }
     ), 401
 
@@ -642,10 +774,6 @@ def admin_logout():
     )
 
 
-# =========================================
-# ÁREA DO ADMINISTRADOR
-# =========================================
-
 @app.route("/admin")
 def admin():
 
@@ -653,6 +781,198 @@ def admin():
         "admin.html"
     )
 
+
+# =========================================
+# PRODUTOS DO ADMINISTRADOR
+# =========================================
+
+@app.route("/admin/produtos")
+def admin_produtos():
+
+    if not session.get(
+        "administrador",
+        False
+    ):
+
+        return jsonify(
+            {
+                "sucesso": False,
+                "erro": "Acesso não autorizado."
+            }
+        ), 401
+
+    conexao = conectar_banco()
+
+    produtos = conexao.execute(
+        """
+        SELECT
+            id,
+            nome,
+            preco,
+            quantidade,
+            custo_producao
+        FROM produtos
+        ORDER BY id
+        """
+    ).fetchall()
+
+    conexao.close()
+
+    lista = []
+
+    for produto in produtos:
+
+        lucro = (
+            produto["preco"]
+            - produto["custo_producao"]
+        )
+
+        lista.append(
+            {
+                "id": produto["id"],
+                "nome": produto["nome"],
+                "preco": produto["preco"],
+                "quantidade": produto["quantidade"],
+                "custo_producao": produto["custo_producao"],
+                "lucro": lucro
+            }
+        )
+
+    return jsonify(
+        {
+            "sucesso": True,
+            "produtos": lista
+        }
+    )
+
+
+@app.route(
+    "/admin/produtos/<int:id>",
+    methods=["PUT"]
+)
+def atualizar_produto_admin(id):
+
+    if not session.get(
+        "administrador",
+        False
+    ):
+
+        return jsonify(
+            {
+                "sucesso": False,
+                "erro": "Acesso não autorizado."
+            }
+        ), 401
+
+    dados = request.get_json(
+        silent=True
+    ) or {}
+
+    nome = dados.get(
+        "nome",
+        ""
+    ).strip()
+
+    preco = dados.get(
+        "preco"
+    )
+
+    custo_producao = dados.get(
+        "custo_producao"
+    )
+
+    if not nome:
+
+        return jsonify(
+            {
+                "sucesso": False,
+                "erro": "Informe o nome do produto."
+            }
+        ), 400
+
+    try:
+
+        preco = float(preco)
+        custo_producao = float(custo_producao)
+
+    except (TypeError, ValueError):
+
+        return jsonify(
+            {
+                "sucesso": False,
+                "erro": (
+                    "Preço e custo de produção "
+                    "devem ser números."
+                )
+            }
+        ), 400
+
+    if preco < 0 or custo_producao < 0:
+
+        return jsonify(
+            {
+                "sucesso": False,
+                "erro": (
+                    "Os valores não podem ser negativos."
+                )
+            }
+        ), 400
+
+    conexao = conectar_banco()
+
+    produto = conexao.execute(
+        """
+        SELECT id
+        FROM produtos
+        WHERE id = ?
+        """,
+        (id,)
+    ).fetchone()
+
+    if not produto:
+
+        conexao.close()
+
+        return jsonify(
+            {
+                "sucesso": False,
+                "erro": "Produto não encontrado."
+            }
+        ), 404
+
+    conexao.execute(
+        """
+        UPDATE produtos
+        SET
+            nome = ?,
+            preco = ?,
+            custo_producao = ?
+        WHERE id = ?
+        """,
+        (
+            nome,
+            preco,
+            custo_producao,
+            id
+        )
+    )
+
+    conexao.commit()
+    conexao.close()
+
+    return jsonify(
+        {
+            "sucesso": True,
+            "mensagem": (
+                "Produto atualizado com sucesso."
+            )
+        }
+    )
+
+
+# =========================================
+# PEDIDOS DO ADMINISTRADOR
+# =========================================
 
 @app.route("/admin/pedidos")
 def admin_pedidos():
@@ -799,7 +1119,7 @@ def cancelar_pedido(pedido_id):
             (pedido_id,)
         ).fetchall()
 
-        # Devolve os produtos ao estoque
+        # Devolve ao estoque
         for item in itens:
 
             conexao.execute(
@@ -814,7 +1134,16 @@ def cancelar_pedido(pedido_id):
                 )
             )
 
-        # Marca o pedido como cancelado
+        # Retira a venda dos relatórios
+        conexao.execute(
+            """
+            DELETE FROM vendas
+            WHERE pedido_id = ?
+            """,
+            (pedido_id,)
+        )
+
+        # Marca como cancelado
         conexao.execute(
             """
             UPDATE pedidos
@@ -863,77 +1192,139 @@ def cancelar_pedido(pedido_id):
 @app.route("/relatorios")
 def relatorios():
 
+    # Somente administrador
+    if not session.get(
+        "administrador",
+        False
+    ):
+
+        return redirect(
+            url_for("admin")
+        )
+
     periodo = request.args.get(
         "periodo",
         "semanal"
     )
 
-    dados_ficticios = {
-        "diario": [37, 54, 42],
-        "semanal": [128, 167, 145],
-        "mensal": [512, 476, 589]
-    }
+    if periodo not in [
+        "diario",
+        "semanal",
+        "mensal"
+    ]:
 
-    if periodo not in dados_ficticios:
         periodo = "semanal"
+
+    if periodo == "diario":
+        intervalo = "-1 day"
+
+    elif periodo == "mensal":
+        intervalo = "-30 days"
+
+    else:
+        intervalo = "-7 days"
 
     conexao = conectar_banco()
 
-    nomes_produtos = conexao.execute(
+    produtos = conexao.execute(
         """
-        SELECT nome
+        SELECT
+            id,
+            nome
         FROM produtos
         ORDER BY id
         """
     ).fetchall()
 
-    vendas_reais = conexao.execute(
-        """
-        SELECT
-            produtos.nome,
-            COALESCE(
-                SUM(vendas.quantidade),
-                0
-            ) AS total_vendido
-        FROM produtos
-        LEFT JOIN vendas
-            ON produtos.id = vendas.produto_id
-        GROUP BY produtos.id
-        ORDER BY produtos.id
-        """
-    ).fetchall()
+    dados = []
+
+    for produto in produtos:
+
+        resultado = conexao.execute(
+            f"""
+            SELECT
+                COALESCE(
+                    SUM(
+                        itens_pedido.quantidade
+                        * itens_pedido.preco
+                    ),
+                    0
+                ) AS vendas,
+
+                COALESCE(
+                    SUM(
+                        itens_pedido.quantidade
+                        * itens_pedido.custo_producao
+                    ),
+                    0
+                ) AS producao
+
+            FROM itens_pedido
+
+            INNER JOIN pedidos
+                ON pedidos.id = itens_pedido.pedido_id
+
+            WHERE itens_pedido.produto_id = ?
+
+            AND pedidos.status != 'Cancelado'
+
+            AND datetime(pedidos.data_pedido)
+                >= datetime('now', 'localtime', ?)
+            """,
+            (
+                produto["id"],
+                intervalo
+            )
+        ).fetchone()
+
+        vendas = float(
+            resultado["vendas"] or 0
+        )
+
+        producao = float(
+            resultado["producao"] or 0
+        )
+
+        lucro = vendas - producao
+
+        dados.append(
+            {
+                "nome": produto["nome"],
+                "vendas": round(vendas, 2),
+                "producao": round(producao, 2),
+                "lucro": round(lucro, 2)
+            }
+        )
 
     conexao.close()
 
     nomes = [
-        produto["nome"]
-        for produto in nomes_produtos
+        item["nome"]
+        for item in dados
     ]
 
-    possui_vendas_reais = any(
-        venda["total_vendido"] > 0
-        for venda in vendas_reais
-    )
+    vendas = [
+        item["vendas"]
+        for item in dados
+    ]
 
-    if possui_vendas_reais:
+    producao = [
+        item["producao"]
+        for item in dados
+    ]
 
-        quantidades = [
-            venda["total_vendido"]
-            for venda in vendas_reais
-        ]
-
-    else:
-
-        quantidades = dados_ficticios[
-            periodo
-        ]
+    lucro = [
+        item["lucro"]
+        for item in dados
+    ]
 
     return render_template(
         "relatorios.html",
         periodo=periodo,
-        titulo_periodo="",
         nomes=nomes,
-        quantidades=quantidades
+        vendas=vendas,
+        producao=producao,
+        lucro=lucro
     )
 
 
@@ -944,5 +1335,7 @@ def relatorios():
 if __name__ == "__main__":
 
     app.run(
+        host="127.0.0.1",
+        port=5000,
         debug=True
     )

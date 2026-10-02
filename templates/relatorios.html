@@ -1,45 +1,57 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <title>Relatórios - Padaria 4 Gerações</title>
+    <title>
+        Relatórios - Padaria 4 Gerações
+    </title>
 
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
-<body class="bg-amber-50 min-h-screen text-gray-800 flex flex-col">
+
+<body class="bg-amber-50 min-h-screen flex flex-col text-gray-800">
 
 
-    <!-- Cabeçalho -->
+    <!-- CABEÇALHO -->
 
     <header class="bg-amber-900 text-amber-100 shadow-lg">
 
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-6 py-4
+                    flex justify-between items-center">
 
             <div class="flex items-center space-x-3">
 
-                <i class="fa-solid fa-wheat-awn text-3xl text-amber-400"></i>
+                <i class="fa-solid fa-wheat-awn
+                          text-3xl
+                          text-amber-400"></i>
 
                 <div>
 
-                    <h1 class="text-2xl font-extrabold text-white">
+                    <h1 class="text-2xl
+                               font-extrabold
+                               text-white">
+
                         4 GERAÇÕES
+
                     </h1>
 
                     <p class="text-xs text-amber-300">
-                        Tradição & Qualidade em Pães
+
+                        Área do Administrador
+
                     </p>
 
                 </div>
@@ -47,43 +59,26 @@
             </div>
 
 
-            <!-- Menu, Relatórios e Carrinho -->
+            <div class="flex items-center space-x-5">
 
-            <div class="flex items-center gap-8">
+                <a href="/admin"
+                   class="text-amber-200
+                          hover:text-amber-400
+                          text-xl"
+                   title="Administrador">
 
-                <nav class="hidden md:flex space-x-8 font-semibold">
-
-                    <a href="/"
-                       class="text-amber-200 hover:text-white transition">
-                        Início
-                    </a>
-
-                    <a href="/produtos"
-                       class="text-amber-200 hover:text-white transition">
-                        Produtos
-                    </a>
-
-                </nav>
-
-
-                <!-- Relatórios -->
-
-                <a href="/relatorios"
-                   class="text-amber-400 transition text-2xl"
-                   title="Relatórios">
-
-                    <i class="fa-solid fa-chart-column"></i>
+                    <i class="fa-solid fa-user-shield"></i>
 
                 </a>
 
 
-                <!-- Carrinho -->
+                <a href="/"
+                   class="text-amber-200
+                          hover:text-white
+                          text-xl"
+                   title="Início">
 
-                <a href="/carrinho"
-                   class="text-amber-200 hover:text-amber-400 transition text-2xl"
-                   title="Carrinho">
-
-                    <i class="fa-solid fa-cart-shopping"></i>
+                    <i class="fa-solid fa-house"></i>
 
                 </a>
 
@@ -94,25 +89,45 @@
     </header>
 
 
-    <!-- Fase 3 -->
+    <!-- CONTEÚDO -->
 
-    <main class="max-w-6xl mx-auto px-6 py-12 w-full">
-
-
-        <!-- Título -->
-
-        <h2 class="text-4xl font-extrabold text-amber-950 text-center">
-
-            Análise de Vendas
-
-        </h2>
+    <main class="max-w-7xl mx-auto px-6 py-12 w-full">
 
 
-        <!-- Recortes de Tempo -->
+        <div class="mb-8">
 
-        <div class="bg-amber-100 rounded-2xl shadow-md p-6 mt-10">
+            <h2 class="text-4xl
+                       font-extrabold
+                       text-amber-950">
 
-            <h3 class="text-xl font-bold text-amber-950 mb-5">
+                Fase 3:
+                Analytics e Inteligência de Negócio
+
+            </h2>
+
+            <p class="text-gray-600 mt-2">
+
+                Acompanhe as vendas, os gastos de produção e o lucro.
+
+            </p>
+
+        </div>
+
+
+        <!-- RECORTES DE TEMPO -->
+
+        <section class="bg-white
+                        rounded-[30px]
+                        shadow-lg
+                        border
+                        border-amber-100
+                        p-7
+                        mb-8">
+
+            <h3 class="text-2xl
+                       font-extrabold
+                       text-amber-950
+                       mb-5">
 
                 Recortes de Tempo
 
@@ -121,46 +136,45 @@
 
             <div class="flex flex-wrap gap-4">
 
-
-                <!-- Diário -->
-
                 <a href="/relatorios?periodo=diario"
-                   class="px-6 py-3 rounded-xl font-bold
-                   {% if periodo == 'diario' %}
-                   bg-amber-500 text-amber-950
-                   {% else %}
-                   bg-white text-gray-700 hover:bg-amber-200
-                   {% endif %}">
+                   class="px-6 py-3
+                          rounded-xl
+                          font-bold
+                          {% if periodo == 'diario' %}
+                          bg-amber-500 text-amber-950
+                          {% else %}
+                          bg-amber-100 text-amber-900 hover:bg-amber-200
+                          {% endif %}">
 
                     Diário
 
                 </a>
 
 
-                <!-- Semanal -->
-
                 <a href="/relatorios?periodo=semanal"
-                   class="px-6 py-3 rounded-xl font-bold
-                   {% if periodo == 'semanal' %}
-                   bg-amber-500 text-amber-950
-                   {% else %}
-                   bg-white text-gray-700 hover:bg-amber-200
-                   {% endif %}">
+                   class="px-6 py-3
+                          rounded-xl
+                          font-bold
+                          {% if periodo == 'semanal' %}
+                          bg-amber-500 text-amber-950
+                          {% else %}
+                          bg-amber-100 text-amber-900 hover:bg-amber-200
+                          {% endif %}">
 
                     Semanal
 
                 </a>
 
 
-                <!-- Mensal -->
-
                 <a href="/relatorios?periodo=mensal"
-                   class="px-6 py-3 rounded-xl font-bold
-                   {% if periodo == 'mensal' %}
-                   bg-amber-500 text-amber-950
-                   {% else %}
-                   bg-white text-gray-700 hover:bg-amber-200
-                   {% endif %}">
+                   class="px-6 py-3
+                          rounded-xl
+                          font-bold
+                          {% if periodo == 'mensal' %}
+                          bg-amber-500 text-amber-950
+                          {% else %}
+                          bg-amber-100 text-amber-900 hover:bg-amber-200
+                          {% endif %}">
 
                     Mensal
 
@@ -168,103 +182,216 @@
 
             </div>
 
-        </div>
+        </section>
 
 
-        <!-- Gráfico -->
+        <!-- GRÁFICO -->
 
-        <div class="bg-white rounded-2xl shadow-md border border-amber-100 p-6 mt-8">
+        <section class="bg-white
+                        rounded-[30px]
+                        shadow-lg
+                        border
+                        border-amber-100
+                        p-7">
 
-            <h3 class="text-2xl font-extrabold text-amber-950 mb-6">
+            <h3 class="text-2xl
+                       font-extrabold
+                       text-amber-950
+                       mb-6">
 
                 Data de visualização
 
             </h3>
 
 
-            <div class="relative h-[400px]">
+            <div class="relative w-full h-[450px]">
 
                 <canvas id="graficoVendas"></canvas>
 
             </div>
 
-        </div>
+        </section>
 
     </main>
 
 
-    <!-- Rodapé -->
+    <!-- RODAPÉ -->
 
-    <footer class="bg-amber-950 text-amber-200/70 text-center py-6 mt-auto">
+    <footer class="bg-amber-950
+                   text-amber-200/70
+                   text-center
+                   py-6
+                   mt-auto">
 
         <p class="text-sm">
 
-            Padaria 4 Gerações &copy; Todos os direitos reservados.
+            Padaria 4 Gerações
+            &copy;
+            Todos os direitos reservados.
 
         </p>
 
     </footer>
 
 
-    <!-- Dados do gráfico -->
+    <!-- DADOS DO FLASK -->
 
-    <script id="dadosVendas" type="application/json">
-        {{ {"nomes": nomes, "quantidades": quantidades} | tojson }}
+    <script id="dadosGrafico"
+            type="application/json">
+
+        {{ {
+            "nomes": nomes,
+            "vendas": vendas,
+            "producao": producao,
+            "lucro": lucro
+        } | tojson }}
+
     </script>
 
 
-    <!-- Gráfico -->
+    <!-- JAVASCRIPT DO GRÁFICO -->
 
     <script>
 
-        const dados = JSON.parse(
-            document.getElementById("dadosVendas").textContent
-        );
-
-        const nomes = dados.nomes;
-
-        const quantidades = dados.quantidades;
-
-
-        const contexto = document
-            .getElementById("graficoVendas")
-            .getContext("2d");
+        const dados =
+            JSON.parse(
+                document
+                    .getElementById("dadosGrafico")
+                    .textContent
+            );
 
 
-        new Chart(contexto, {
+        const nomes =
+            dados.nomes;
 
-            type: "bar",
 
-            data: {
+        const vendas =
+            dados.vendas;
 
-                labels: nomes,
 
-                datasets: [
+        const producao =
+            dados.producao;
 
-                    {
-                        label: "Quantidade vendida",
-                        data: quantidades
-                    }
 
-                ]
+        const lucro =
+            dados.lucro;
 
-            },
 
-            options: {
+        const canvas =
+            document.getElementById(
+                "graficoVendas"
+            );
 
-                responsive: true,
 
-                maintainAspectRatio: false,
+        const contexto =
+            canvas.getContext("2d");
 
-                scales: {
 
-                    y: {
+        new Chart(
+            contexto,
+            {
 
-                        beginAtZero: true,
+                type: "bar",
 
-                        ticks: {
 
-                            precision: 0
+                data: {
+
+                    labels: nomes,
+
+
+                    datasets: [
+
+                        {
+                            label:
+                                "Valor de venda",
+
+                            data:
+                                vendas
+                        },
+
+
+                        {
+                            label:
+                                "Gasto de produção",
+
+                            data:
+                                producao
+                        },
+
+
+                        {
+                            label:
+                                "Lucro",
+
+                            data:
+                                lucro
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true,
+
+                            ticks: {
+
+                                callback:
+                                    function(valor) {
+
+                                        return "R$ "
+                                            + Number(valor)
+                                                .toFixed(2)
+                                                .replace(
+                                                    ".",
+                                                    ","
+                                                );
+
+                                    }
+
+                            }
+
+                        }
+
+                    },
+
+
+                    plugins: {
+
+                        tooltip: {
+
+                            callbacks: {
+
+                                label:
+                                    function(contexto) {
+
+                                        return (
+                                            contexto.dataset.label
+                                            + ": R$ "
+                                            + Number(
+                                                contexto.raw
+                                            )
+                                                .toFixed(2)
+                                                .replace(
+                                                    ".",
+                                                    ","
+                                                )
+                                        );
+
+                                    }
+
+                            }
 
                         }
 
@@ -273,10 +400,10 @@
                 }
 
             }
-
-        });
+        );
 
     </script>
+
 
 </body>
 
