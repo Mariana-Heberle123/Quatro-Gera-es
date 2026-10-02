@@ -19,6 +19,7 @@
 
 <body class="bg-amber-50 min-h-screen text-gray-800 flex flex-col">
 
+
     <!-- Cabeçalho -->
 
     <header class="bg-amber-900 text-amber-100 shadow-lg">
@@ -43,15 +44,20 @@
 
             </div>
 
+
+            <!-- Menu e Carrinho -->
+
             <div class="flex items-center gap-8">
 
                 <nav class="hidden md:flex space-x-8 font-semibold">
 
-                    <a href="/" class="text-amber-200 hover:text-white transition">
+                    <a href="/"
+                       class="text-amber-200 hover:text-white transition">
                         Início
                     </a>
 
-                    <a href="/produtos" class="text-amber-200 hover:text-white transition">
+                    <a href="/produtos"
+                       class="text-amber-200 hover:text-white transition">
                         Produtos
                     </a>
 
@@ -83,6 +89,8 @@
 
         {% if produtos %}
 
+        <!-- Produtos do carrinho -->
+
         <div class="space-y-5">
 
             {% for item in produtos %}
@@ -91,26 +99,35 @@
 
                 <div class="flex items-center gap-6">
 
-                    {% if item['produto']['id'] == 1 %}
 
-                    <img src="{{ url_for('static', filename='pao-frances.jpg') }}"
-                         alt="{{ item['produto']['nome'] }}"
-                         class="w-28 h-28 object-cover rounded-xl">
+                    <!-- Imagem -->
 
-                    {% elif item['produto']['id'] == 2 %}
+                    <div class="flex-shrink-0">
 
-                    <img src="{{ url_for('static', filename='pao-de-forma.webp') }}"
-                         alt="{{ item['produto']['nome'] }}"
-                         class="w-28 h-28 object-cover rounded-xl">
+                        {% if item['produto']['id'] == 1 %}
 
-                    {% else %}
+                        <img src="{{ url_for('static', filename='pao-frances.jpg') }}"
+                             alt="{{ item['produto']['nome'] }}"
+                             class="w-28 h-28 object-cover rounded-xl">
 
-                    <img src="{{ url_for('static', filename='pao-de-milho.jpg') }}"
-                         alt="{{ item['produto']['nome'] }}"
-                         class="w-28 h-28 object-cover rounded-xl">
+                        {% elif item['produto']['id'] == 2 %}
 
-                    {% endif %}
+                        <img src="{{ url_for('static', filename='pao-de-forma.webp') }}"
+                             alt="{{ item['produto']['nome'] }}"
+                             class="w-28 h-28 object-cover rounded-xl">
 
+                        {% else %}
+
+                        <img src="{{ url_for('static', filename='pao-de-milho.jpg') }}"
+                             alt="{{ item['produto']['nome'] }}"
+                             class="w-28 h-28 object-cover rounded-xl">
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Informações -->
 
                     <div class="flex-1">
 
@@ -122,7 +139,7 @@
                             {{ item['produto']['descricao'] }}
                         </p>
 
-                        <p class="text-gray-500 text-sm mt-1">
+                        <p class="text-gray-500 text-sm mt-2">
                             Preço por unidade:
                             R$ {{ "%.2f"|format(item['produto']['preco']) }}
                         </p>
@@ -141,16 +158,22 @@
 
                         <a href="/diminuir/{{ item['produto']['id'] }}"
                            class="w-9 h-9 flex items-center justify-center bg-amber-200 hover:bg-amber-300 text-amber-950 font-bold rounded-lg">
+
                             −
+
                         </a>
 
                         <span class="text-lg font-bold min-w-[25px] text-center">
+
                             {{ item['quantidade'] }}
+
                         </span>
 
                         <a href="/adicionar/{{ item['produto']['id'] }}"
                            class="w-9 h-9 flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold rounded-lg">
+
                             +
+
                         </a>
 
                     </div>
@@ -190,7 +213,20 @@
         </div>
 
 
+        <!-- Continuar para pagamento -->
+
+        <a href="/login"
+           class="block text-center bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold py-3 rounded-xl mt-6 transition">
+
+            Continuar para pagamento
+
+        </a>
+
+
         {% else %}
+
+
+        <!-- Carrinho vazio -->
 
         <div class="bg-amber-100 rounded-2xl p-10 text-center">
 

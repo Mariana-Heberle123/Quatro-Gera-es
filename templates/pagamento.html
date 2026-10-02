@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pagamento - Padaria 4 Gerações</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+
+<body class="bg-amber-50 min-h-screen flex flex-col text-gray-800">
+
+
+    <!-- Cabeçalho -->
+
+    <header class="bg-amber-900 text-amber-100 shadow-lg">
+
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+            <div class="flex items-center space-x-3">
+
+                <i class="fa-solid fa-wheat-awn text-3xl text-amber-400"></i>
+
+                <div>
+
+                    <h1 class="text-2xl font-extrabold text-white">
+                        4 GERAÇÕES
+                    </h1>
+
+                    <p class="text-xs text-amber-300">
+                        Tradição & Qualidade em Pães
+                    </p>
+
+                </div>
+
+            </div>
+
+            <a href="/carrinho"
+               class="text-amber-200 hover:text-amber-400 transition text-2xl"
+               title="Carrinho">
+
+                <i class="fa-solid fa-cart-shopping"></i>
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- Conteúdo -->
+
+    <main class="max-w-5xl mx-auto px-6 py-12 w-full">
+
+        <div id="mensagemSucesso"
+             class="hidden max-w-xl mx-auto bg-green-100 border border-green-300 rounded-[30px] p-10 text-center">
+
+            <i class="fa-solid fa-circle-check text-green-600 text-6xl"></i>
+
+            <h2 class="text-3xl font-extrabold text-green-800 mt-5">
+                Pagamento aprovado!
+            </h2>
+
+            <p class="text-gray-600 mt-3">
+                Sua compra foi concluída com sucesso.
+            </p>
+
+            <p class="text-gray-600 mt-2">
+                O estoque foi atualizado.
+            </p>
+
+            <a href="/produtos"
+               class="inline-block bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold px-7 py-3 rounded-xl mt-7">
+
+                Voltar aos produtos
+
+            </a>
+
+        </div>
+
+
+        <div id="conteudoPagamento"
+             class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+
+            <!-- Formulário -->
+
+            <div class="bg-amber-100 rounded-[30px] shadow-lg p-8">
+
+                <h2 class="text-3xl font-extrabold text-amber-950 mb-6">
+                    Pagamento
+                </h2>
+
+
+                <div id="mensagemErro"
+                     class="hidden bg-red-100 text-red-700 rounded-xl p-3 mb-5 text-sm">
+                </div>
+
+
+                <form id="formPagamento">
+
+                    <label class="block text-sm font-bold text-amber-950 mb-2">
+                        Nome no cartão
+                    </label>
+
+                    <input
+                        type="text"
+                        name="nome"
+                        required
+                        class="w-full border border-amber-200 rounded-xl px-4 py-3 mb-5 outline-none focus:ring-2 focus:ring-amber-500"
+                        placeholder="Cliente da Padaria">
+
+
+                    <label class="block text-sm font-bold text-amber-950 mb-2">
+                        Número do cartão
+                    </label>
+
+                    <input
+                        type="text"
+                        name="numero"
+                        id="numero"
+                        required
+                        maxlength="19"
+                        class="w-full border border-amber-200 rounded-xl px-4 py-3 mb-5 outline-none focus:ring-2 focus:ring-amber-500"
+                        placeholder="1111 2222 3333 4444">
+
+
+                    <div class="grid grid-cols-2 gap-4">
+
+                        <div>
+
+                            <label class="block text-sm font-bold text-amber-950 mb-2">
+                                Validade
+                            </label>
+
+                            <input
+                                type="text"
+                                name="validade"
+                                id="validade"
+                                required
+                                maxlength="5"
+                                class="w-full border border-amber-200 rounded-xl px-4 py-3"
+                                placeholder="12/30">
+
+                        </div>
+
+
+                        <div>
+
+                            <label class="block text-sm font-bold text-amber-950 mb-2">
+                                CVV
+                            </label>
+
+                            <input
+                                type="text"
+                                name="cvv"
+                                id="cvv"
+                                required
+                                maxlength="3"
+                                class="w-full border border-amber-200 rounded-xl px-4 py-3"
+                                placeholder="123">
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="text-gray-500 text-xs mt-4">
+                        Pagamento fictício para demonstração do projeto.
+                    </p>
+
+
+                    <button
+                        id="botaoPagamento"
+                        type="submit"
+                        class="w-full bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold py-3 rounded-xl mt-6 transition">
+
+                        Confirmar pagamento
+
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- Resumo -->
+
+            <div class="bg-white rounded-[30px] shadow-lg border border-amber-100 p-8">
+
+                <h2 class="text-2xl font-extrabold text-amber-950 mb-6">
+                    Resumo da compra
+                </h2>
+
+
+                {% for item in produtos %}
+
+                <div class="flex justify-between items-center border-b border-amber-100 py-4">
+
+                    <div>
+
+                        <p class="font-bold text-amber-950">
+                            {{ item['produto']['nome'] }}
+                        </p>
+
+                        <p class="text-sm text-gray-500">
+                            {{ item['quantidade'] }} unidade(s)
+                        </p>
+
+                    </div>
+
+                    <p class="font-bold text-amber-900">
+                        R$ {{ "%.2f"|format(item['subtotal']) }}
+                    </p>
+
+                </div>
+
+                {% endfor %}
+
+
+                <div class="flex justify-between mt-6">
+
+                    <span class="text-xl font-bold text-amber-950">
+                        Total
+                    </span>
+
+                    <span class="text-2xl font-extrabold text-amber-900">
+                        R$ {{ "%.2f"|format(total) }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- Rodapé -->
+
+    <footer class="bg-amber-950 text-amber-200/70 text-center py-6 mt-auto">
+
+        <p class="text-sm">
+            Padaria 4 Gerações &copy; Todos os direitos reservados.
+        </p>
+
+    </footer>
+
+
+    <!-- JavaScript do pagamento -->
+
+    <script>
+
+        const formulario = document.getElementById("formPagamento");
+
+        const mensagemErro = document.getElementById("mensagemErro");
+
+        const mensagemSucesso = document.getElementById("mensagemSucesso");
+
+        const conteudoPagamento = document.getElementById("conteudoPagamento");
+
+        const botaoPagamento = document.getElementById("botaoPagamento");
+
+
+        const numero = document.getElementById("numero");
+
+        numero.addEventListener("input", function () {
+
+            let valor = this.value.replace(/\D/g, "");
+
+            valor = valor.substring(0, 16);
+
+            valor = valor.replace(/(\d{4})(?=\d)/g, "$1 ");
+
+            this.value = valor;
+
+        });
+
+
+        const validade = document.getElementById("validade");
+
+        validade.addEventListener("input", function () {
+
+            let valor = this.value.replace(/\D/g, "");
+
+            valor = valor.substring(0, 4);
+
+            if (valor.length > 2) {
+
+                valor = valor.substring(0, 2) + "/" + valor.substring(2);
+
+            }
+
+            this.value = valor;
+
+        });
+
+
+        const cvv = document.getElementById("cvv");
+
+        cvv.addEventListener("input", function () {
+
+            this.value = this.value.replace(/\D/g, "").substring(0, 3);
+
+        });
+
+
+        formulario.addEventListener("submit", async function (evento) {
+
+            evento.preventDefault();
+
+
+            mensagemErro.classList.add("hidden");
+
+            botaoPagamento.disabled = true;
+
+            botaoPagamento.textContent = "Processando pagamento...";
+
+
+            const dados = new FormData(formulario);
+
+
+            try {
+
+                const resposta = await fetch("/processar_pagamento", {
+
+                    method: "POST",
+
+                    body: dados
+
+                });
+
+
+                const resultado = await resposta.json();
+
+
+                if (resultado.sucesso) {
+
+                    conteudoPagamento.classList.add("hidden");
+
+                    mensagemSucesso.classList.remove("hidden");
+
+                } else {
+
+                    mensagemErro.textContent = resultado.erro;
+
+                    mensagemErro.classList.remove("hidden");
+
+                    botaoPagamento.disabled = false;
+
+                    botaoPagamento.textContent = "Confirmar pagamento";
+
+                }
+
+            } catch (erro) {
+
+                mensagemErro.textContent =
+                    "Não foi possível processar o pagamento.";
+
+                mensagemErro.classList.remove("hidden");
+
+                botaoPagamento.disabled = false;
+
+                botaoPagamento.textContent = "Confirmar pagamento";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>

@@ -44,21 +44,34 @@
             </div>
 
 
-            <!-- Menu + Carrinho -->
+            <!-- Menu, Relatórios e Carrinho -->
 
             <div class="flex items-center gap-8">
 
                 <nav class="hidden md:flex space-x-8 font-semibold">
 
-                    <a href="/" class="text-amber-400 border-b-2 border-amber-400 pb-1">
+                    <a href="/"
+                       class="text-amber-400 border-b-2 border-amber-400 pb-1">
                         Início
                     </a>
 
-                    <a href="/produtos" class="text-amber-200 hover:text-white transition">
+                    <a href="/produtos"
+                       class="text-amber-200 hover:text-white transition">
                         Produtos
                     </a>
 
                 </nav>
+
+
+                <!-- Ícone de Relatórios -->
+
+                <a href="/relatorios"
+                   class="text-amber-200 hover:text-amber-400 transition text-2xl"
+                   title="Relatórios">
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                </a>
 
 
                 <!-- Ícone do Carrinho -->
@@ -78,7 +91,7 @@
     </header>
 
 
-    <!-- Banner Principal (Hero Section) -->
+    <!-- Banner Principal -->
 
     <section class="relative bg-amber-950 text-white overflow-hidden">
 
@@ -193,19 +206,15 @@
                 </div>
 
 
-                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                <div class="p-6">
 
-                    <div>
+                    <h4 class="text-xl font-bold text-amber-950">
+                        {{ produto['nome'] }}
+                    </h4>
 
-                        <h4 class="text-xl font-bold text-amber-950">
-                            {{ produto['nome'] }}
-                        </h4>
-
-                        <p class="text-gray-600 text-sm mt-2">
-                            {{ produto['descricao'] }}
-                        </p>
-
-                    </div>
+                    <p class="text-gray-600 text-sm mt-2">
+                        {{ produto['descricao'] }}
+                    </p>
 
                 </div>
 
@@ -223,7 +232,9 @@
     <footer class="bg-amber-950 text-amber-200/70 text-center py-6 mt-auto border-t border-amber-900">
 
         <p class="text-sm">
+
             Padaria 4 Gerações &copy; Todos os direitos reservados.
+
         </p>
 
     </footer>

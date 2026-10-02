@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - Padaria 4 Gerações</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+
+<body class="bg-amber-50 min-h-screen flex flex-col">
+
+    <header class="bg-amber-900 text-amber-100 shadow-lg">
+
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+            <div class="flex items-center space-x-3">
+
+                <i class="fa-solid fa-wheat-awn text-3xl text-amber-400"></i>
+
+                <div>
+
+                    <h1 class="text-2xl font-extrabold text-white">
+                        4 GERAÇÕES
+                    </h1>
+
+                    <p class="text-xs text-amber-300">
+                        Tradição & Qualidade em Pães
+                    </p>
+
+                </div>
+
+            </div>
+
+            <a href="/carrinho"
+               class="text-amber-200 hover:text-amber-400 transition text-2xl">
+
+                <i class="fa-solid fa-cart-shopping"></i>
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <main class="flex-1 flex items-center justify-center px-6 py-12">
+
+        <div class="w-full max-w-md bg-amber-100 rounded-[30px] shadow-lg p-8">
+
+            <div class="text-center mb-8">
+
+                <i class="fa-solid fa-user text-amber-700 text-4xl"></i>
+
+                <h2 class="text-3xl font-extrabold text-amber-950 mt-4">
+                    Entrar
+                </h2>
+
+                <p class="text-gray-600 mt-2">
+                    Entre para continuar sua compra
+                </p>
+
+            </div>
+
+
+            {% if erro %}
+
+            <div class="bg-red-100 text-red-700 rounded-xl p-3 mb-5 text-sm">
+                {{ erro }}
+            </div>
+
+            {% endif %}
+
+
+            <form method="POST">
+
+                <label class="block text-sm font-bold text-amber-950 mb-2">
+                    E-mail
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    required
+                    class="w-full border border-amber-200 rounded-xl px-4 py-3 mb-5 outline-none focus:ring-2 focus:ring-amber-500"
+                    placeholder="cliente@padaria.com">
+
+
+                <label class="block text-sm font-bold text-amber-950 mb-2">
+                    Senha
+                </label>
+
+                <input
+                    type="password"
+                    name="senha"
+                    required
+                    class="w-full border border-amber-200 rounded-xl px-4 py-3 mb-6 outline-none focus:ring-2 focus:ring-amber-500"
+                    placeholder="123456">
+
+
+                <button
+                    type="submit"
+                    class="w-full bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold py-3 rounded-xl transition">
+
+                    Continuar
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </main>
+
+
+    <footer class="bg-amber-950 text-amber-200/70 text-center py-6">
+
+        <p class="text-sm">
+            Padaria 4 Gerações &copy; Todos os direitos reservados.
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
